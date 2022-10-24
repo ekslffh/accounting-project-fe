@@ -1,0 +1,246 @@
+import * as React from 'react';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import MonthlyChart from '../components/Dashboard/MonthlyChart';
+import Status from '../components/Dashboard/Status';
+import MemberTable from '../components/Dashboard/Table/MemberTable';
+import CategoryTable from '../components/Dashboard/Table/CategoryTable';
+import { call, isCorrectQuarter } from '../service/ApiService';
+import LeaderHistoryTable from '../components/Dashboard/Table/LeaderHistoryTable';
+import { API_BASE_URL } from '../config/app-config';
+import axios from 'axios';
+
+export default function Leader(props) {
+  const [department, ] = React.useState({ name: props.match.params.name });
+  const [categories, setCategories] = React.useState([]);
+  const [members, setMembers] = React.useState([]);
+  const [histories, setHistories] = React.useState([]);
+  const [filteredHistories, setFilteredHistories] = React.useState([]);
+  const [receipt, setReceipt] = React.useState();
+  const [tempFile, setTempFile] = React.useState();
+
+  React.useEffect(() => {
+    console.log("file: ", tempFile);
+  }, [tempFile])
+  // headers.append("Authorization", "Bearer " + localStorage.getItem("token"));
+
+  const handleClick = () => {
+    var data = new FormData();
+    for (let i = 0; i < tempFile.length; i++) {
+      data.append("files", tempFile[i]);
+    }
+    data.append("hello", "hello world");
+    let department = {name: "이미지 연동 테스트", asset: 0};
+    data.append("department", new Blob([JSON.stringify(department)], {
+      type: "application/json"
+    }));
+    console.log("data: ", data);
+    for(let [name, value] of data) {
+      console.log(name + ": ", value);
+    }
+    axios.post(API_BASE_URL + "/history/file", data, {
+      headers: {
+        // "Content-type": "multipart/form-data",
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+    ;
+  }
+
+  // 카테고리 관련 함수
+  const getCategories = () => {
+    call("/department/categories?name=" + department.name, "GET", null)
+    .then(res => {
+      setCategories(res.data);
+    })
+    .catch(err => console.log(err))
+  };
+  const addCategory = (item) => {
+    if (item.title === '') {
+      alert("카테고리명을 입력해주세요.");
+      return;
+    }
+    item.department = { name: department.name };
+    call("/category", "POST", item)
+    .then(res => {
+      setCategories(res.data);
+    })
+    .then(res => alert("카테고리가 추가되었습니다."))
+    .catch(res => alert(res.error));
+  };
+  const deleteCategory = (item) => {
+    if(window.confirm("정말 삭제하시겠습니까?")) {
+       item.department = { name: department.name }
+       call("/category", "DELETE", item).then(res => {
+       setCategories(res.data);
+       })
+      .then(res =>  alert("카테고리가 삭제되었습니다."))
+      .catch(res => alert(res.error));
+    }
+    else {
+      alert("취소되었습니다.")
+    }
+    
+  }
+  const updateCategory = (item) => {
+    if (item.title === '') {
+      alert("카테고리명을 입력해주세요.");
+      return;
+    }
+    item.department = { name: department.name };
+    call("/category", "PUT", item)
+    .then(res => {
+      setCategories(res.data);
+    })
+    .then(res => alert("카테고리가 수정되었습니다."))
+    // .then(res => window.location.href = "/")
+    .catch(res => alert(res.error));
+  }
+
+  // 멤버 관련 함수
+  const getMembers = () => {
+    call("/department/members?name=" + department.name, "GET", null).then(res => {
+      setMembers(res.data);
+    })
+  }
+  const deleteMember = (item) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+        call("/member", "DELETE", item)
+        .then(res => { getMembers();})
+        .then(res => alert("멤버가 삭제되었습니다."))
+        .catch(res => alert(res.error));
+    }
+    else {
+      alert("취소되었습니다.")
+    }
+  }
+
+  // 수입, 지출 내역 관련 함수
+  const getHistories = () => {
+    call("/department/histories?name=" + department.name, "GET", null)
+    .then(res => {
+      console.log(res.data);
+      setHistories(res.data);
+    })
+    .catch(err => console.log(err));
+  };
+  const addHistory = (item) => {
+    // call("/history", "POST", item).then(res => {
+    // }).then(res => getHistories())
+    // .catch(err => console.log(err));
+    var data = new FormData();
+    console.log("receipt: ", receipt);
+    for (let i = 0; i < receipt.length; i++) {
+      data.append("receipt", receipt[i]);
+    }
+    data.append("history", new Blob([JSON.stringify(item)], {
+      type: "application/json"
+    }));
+    axios.post(API_BASE_URL + "/history", data, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then(res => {
+      getHistories();
+    })
+    .catch(err => console.log(err));
+    ;
+  };
+  const deleteHistory = (item) => {
+    call("/history", "DELETE", item).then(res => {
+    }).then(res => getHistories())
+    .catch(err => console.log(err));
+  };
+  const updateHistory = (item) => {
+    call("/history", "PUT", item).then(res => {
+    })
+    .then(res => getHistories())
+    .catch(err => console.log(err));
+  };
+
+  // 카테고리, 분기로 필터링하는 함수
+  function filterHistories(search) {
+    // 전체 멤버일 때
+    if (search.member.id === 0) {
+      if (search.category.id === 0) setFilteredHistories(histories.filter(history => isCorrectQuarter(history.useDate, search.quarter)));
+      else setFilteredHistories(histories.filter(history => (history.category.id === search.category.id && isCorrectQuarter(history.useDate, search.quarter))))
+    }
+    // 특정 멤버 내역 가져오기
+    else {
+      if (search.category.id === 0) setFilteredHistories(histories.filter(history => history.member.id === search.member.id && isCorrectQuarter(history.useDate, search.quarter)));
+      else setFilteredHistories(histories.filter(history => (history.member.id === search.member.id && history.category.id === search.category.id && isCorrectQuarter(history.useDate, search.quarter))))
+    }
+    // 전체 카테고리
+    
+  }
+
+  React.useEffect(() => {
+    getCategories();
+    getHistories();
+    getMembers();
+  }, []);
+
+  React.useEffect(() => {
+    setFilteredHistories(histories);
+  }, [histories])
+
+  return (
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <MonthlyChart histories={filteredHistories} />
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <Status histories={filteredHistories} />
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <LeaderHistoryTable histories={filteredHistories} add={addHistory} setReceipt={setReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <CategoryTable categories={categories} add={addCategory} delete={deleteCategory} update={updateCategory} />
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <MemberTable members={members} delete={deleteMember} />
+                </Paper>
+              </Grid>
+            </Grid>
+              {/* <input
+                type="file" 
+                multiple
+                id="file" 
+                onChange={(e) => {
+                  setTempFile(e.target.files);
+                }} 
+              />  
+              <button onClick={handleClick}>전송</button>
+              <img src='/Users/nasungmin/Desktop/accounting-project/receipt/youth/V6E008KXTL.jpeg' /> */}
+          </Container>
+  );
+}
