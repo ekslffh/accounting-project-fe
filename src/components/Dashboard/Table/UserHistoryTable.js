@@ -165,7 +165,7 @@ export default function UserHistoryTable(props) {
                 <BasicModal name={<ReceiptLong />}><BasicImageList items={row.imagePath} /></BasicModal>}
               </TableCell>
               <TableCell align="right">
-                <BasicModal name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
+                <BasicModal name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
                 <Button size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
               </TableCell>
             </TableRow>
