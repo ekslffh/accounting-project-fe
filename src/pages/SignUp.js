@@ -136,9 +136,15 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    if (data.get('password').trim() === '') {
+    if (data.get('joinCode').trim() !== '0691') {
+      alert("가입코드가 일치하지 않습니다.")
+    }
+    else if (data.get('password').trim() === '') {
       alert("비밀번호를 입력해주세요.");
     } 
+    else if (data.get('password') !== data.get('passwordCheck')) {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
     else if (data.get('name').trim() === '') {
       alert("이름을 입력해주세요.");
     }
@@ -184,6 +190,16 @@ export default function SignUp() {
                direction="row"
                alignItems="center"
             >
+               <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="joinCode"
+                  label="가입코드"
+                  type="password"
+                  id="joinCode"
+                />
+              </Grid>
               <Grid item xs={9}>
                 <TextField
                   required
@@ -207,6 +223,16 @@ export default function SignUp() {
                   label="비밀번호"
                   type="password"
                   id="password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="passwordCheck"
+                  label="비밀번호 확인"
+                  type="password"
+                  id="passwordCheck"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
