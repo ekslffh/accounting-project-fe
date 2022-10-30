@@ -10,6 +10,8 @@ import { call, isCorrectQuarter } from '../service/ApiService';
 import LeaderHistoryTable from '../components/Dashboard/Table/LeaderHistoryTable';
 import { API_BASE_URL } from '../config/app-config';
 import axios from 'axios';
+import BasicModal from '../components/BasicModal';
+import BasicImageList from '../components/BasicImageList';
 
 export default function Leader(props) {
   const [department, ] = React.useState({ name: props.match.params.name });
@@ -17,38 +19,7 @@ export default function Leader(props) {
   const [members, setMembers] = React.useState([]);
   const [histories, setHistories] = React.useState([]);
   const [filteredHistories, setFilteredHistories] = React.useState([]);
-  const [receipt, setReceipt] = React.useState();
-  const [tempFile, setTempFile] = React.useState();
-
-  React.useEffect(() => {
-    console.log("file: ", tempFile);
-  }, [tempFile])
-  // headers.append("Authorization", "Bearer " + localStorage.getItem("token"));
-
-  const handleClick = () => {
-    var data = new FormData();
-    for (let i = 0; i < tempFile.length; i++) {
-      data.append("files", tempFile[i]);
-    }
-    data.append("hello", "hello world");
-    let department = {name: "이미지 연동 테스트", asset: 0};
-    data.append("department", new Blob([JSON.stringify(department)], {
-      type: "application/json"
-    }));
-    console.log("data: ", data);
-    for(let [name, value] of data) {
-      console.log(name + ": ", value);
-    }
-    axios.post(API_BASE_URL + "/history/file", data, {
-      headers: {
-        // "Content-type": "multipart/form-data",
-        "Authorization": "Bearer " + localStorage.getItem("token"),
-      },
-    })
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
-    ;
-  }
+  const [receipt, setReceipt] = React.useState(null);
 
   // 카테고리 관련 함수
   const getCategories = () => {
@@ -96,7 +67,6 @@ export default function Leader(props) {
       setCategories(res.data);
     })
     .then(res => alert("카테고리가 수정되었습니다."))
-    // .then(res => window.location.href = "/")
     .catch(res => alert(res.error));
   }
 
@@ -128,13 +98,13 @@ export default function Leader(props) {
     .catch(err => console.log(err));
   };
   const addHistory = (item) => {
-    // call("/history", "POST", item).then(res => {
-    // }).then(res => getHistories())
-    // .catch(err => console.log(err));
     var data = new FormData();
     console.log("receipt: ", receipt);
-    for (let i = 0; i < receipt.length; i++) {
-      data.append("receipt", receipt[i]);
+    
+    if (receipt !== null) {
+      for (let i = 0; i < receipt.length; i++) {
+        data.append("receipts", receipt[i]);
+      }
     }
     data.append("history", new Blob([JSON.stringify(item)], {
       type: "application/json"
@@ -155,11 +125,54 @@ export default function Leader(props) {
     }).then(res => getHistories())
     .catch(err => console.log(err));
   };
-  const updateHistory = (item) => {
-    call("/history", "PUT", item).then(res => {
+  const deleteReceipt = (item) => {
+    console.log(item);
+    axios.delete(API_BASE_URL + "/history/receipt", {
+      data: item,
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      }
     })
-    .then(res => getHistories())
+    .then(res => {
+      alert("영수증이 삭제되었습니다.")
+      getHistories();
+    })
     .catch(err => console.log(err));
+    // call("/history/receipt", "DELETE", item)
+    // .then(res => {
+    //   alert("영수증이 삭제되었습니다")
+    //   getHistories();
+    // })
+    // .catch(err => console.log(err)); 
+  }
+  const updateHistory = (item) => {
+    var data = new FormData();
+    console.log("receipt: ", receipt);
+
+    if (receipt !== null) {
+      for (let i = 0; i < receipt.length; i++) {
+        data.append("receipts", receipt[i]);
+      }
+    }
+    data.append("history", new Blob([JSON.stringify(item)], {
+      type: "application/json"
+    }));
+    console.log("data: ", data);
+    axios.put(API_BASE_URL + "/history", data, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then(res => {
+      alert("내역이 수정되었습니다.")
+      getHistories();
+    })
+    .catch(err => console.log(err));
+    
+    // call("/history", "PUT", item).then(res => {
+    // })
+    // .then(res => getHistories())
+    // .catch(err => console.log(err));
   };
 
   // 카테고리, 분기로 필터링하는 함수
@@ -175,7 +188,6 @@ export default function Leader(props) {
       else setFilteredHistories(histories.filter(history => (history.member.id === search.member.id && history.category.id === search.category.id && isCorrectQuarter(history.useDate, search.quarter))))
     }
     // 전체 카테고리
-    
   }
 
   React.useEffect(() => {
@@ -187,6 +199,10 @@ export default function Leader(props) {
   React.useEffect(() => {
     setFilteredHistories(histories);
   }, [histories])
+
+  React.useEffect(() => {
+    console.log(receipt);
+  }, [receipt])
 
   return (
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -217,7 +233,7 @@ export default function Leader(props) {
               </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <LeaderHistoryTable histories={filteredHistories} add={addHistory} setReceipt={setReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
+                  <LeaderHistoryTable histories={filteredHistories} add={addHistory} setReceipt={setReceipt} deleteReceipt={deleteReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
                 </Paper>
               </Grid>
               <Grid item xs={12}>
@@ -231,16 +247,6 @@ export default function Leader(props) {
                 </Paper>
               </Grid>
             </Grid>
-              {/* <input
-                type="file" 
-                multiple
-                id="file" 
-                onChange={(e) => {
-                  setTempFile(e.target.files);
-                }} 
-              />  
-              <button onClick={handleClick}>전송</button>
-              <img src='/Users/nasungmin/Desktop/accounting-project/receipt/youth/V6E008KXTL.jpeg' /> */}
           </Container>
   );
 }

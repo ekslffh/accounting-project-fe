@@ -20,12 +20,10 @@ export default function AccessDenied() {
               color="text.primary"
               gutterBottom
             >
-              403 접근 에러
+              403 ERROR
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
+              해당 요청에 대한 권한이 없습니다. 
             </Typography>
             <Stack
               sx={{ pt: 4 }}

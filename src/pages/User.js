@@ -1,16 +1,22 @@
-import * as React from 'react';
 import Container from '@mui/material/Container';
+import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import MonthlyChart from '../components/Dashboard/MonthlyChart';
 import Status from '../components/Dashboard/Status';
 import { call, isCorrectQuarter } from '../service/ApiService';
 import UserHistoryTable from '../components/Dashboard/Table/UserHistoryTable';
+import axios from 'axios';
+import { API_BASE_URL } from '../config/app-config';
 
 function DashboardContent() {
   const [categories, setCategories] = React.useState([]);
   const [histories, setHistories] = React.useState([]);
   const [serachHistories, setSearchHistories] = React.useState([]);
+
+  const [receipt, setReceipt] = React.useState(null);
+
+  console.log(histories)
 
   // 카테고리, 분기로 필터링하는 함수
   function filterHistories(search) {
@@ -35,10 +41,25 @@ function DashboardContent() {
   };
   
   const addHistory = (item) => {
-    call("/history", "POST", item).then(res => {
-      setHistories(res.data);
+    var data = new FormData();
+
+    if (receipt != null) {
+      for (let i = 0; i < receipt.length; i++) {
+        data.append("receipts", receipt[i]);
+      }
+    }
+    data.append("history", new Blob([JSON.stringify(item)], {
+      type: "application/json"
+    }));
+    axios.post(API_BASE_URL + "/history", data, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      },
     })
-    .catch(err => console.log(err));
+    .then((res) => 
+      setHistories(res.data.data)
+    )
+    .catch(res => console.log(res.data.error))
   };
 
   const deleteHistory = (item) => {
@@ -48,11 +69,46 @@ function DashboardContent() {
     .catch(err => console.log(err));
   };
 
-  const updateHistory = (item) => {
-    call("/history", "PUT", item).then(res => {
-      setHistories(res.data);
+  const deleteReceipt = (item) => {
+    axios.delete(API_BASE_URL + "/history/receipt", {
+      data: item,
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      }
     })
-    .catch(err => console.log(err));
+    .then(res => {
+      alert("영수증이 삭제되었습니다.")
+      setHistories(res.data.data);
+    })
+    .catch(res => console.log(res.data.error));
+  }
+
+  const updateHistory = (item) => {
+    var data = new FormData();
+    console.log("receipt: ", receipt);
+
+    if (receipt !== null) {
+      for (let i = 0; i < receipt.length; i++) {
+        data.append("receipts", receipt[i]);
+      }
+    }
+    data.append("history", new Blob([JSON.stringify(item)], {
+      type: "application/json"
+    }));
+    axios.put(API_BASE_URL + "/history", data, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then(res => {
+      alert("내역이 수정되었습니다.")
+      setHistories(res.data.data);
+    })
+    .catch(res => console.log(res.data.error))
+    // call("/history", "PUT", item).then(res => {
+    //   setHistories(res.data.data);
+    // })
+    // .catch(res => console.log(res.data.error));
   };
 
   React.useEffect(() => {
@@ -96,7 +152,7 @@ function DashboardContent() {
               {/* History Table */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <UserHistoryTable histories={serachHistories} add={addHistory} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} />
+                  <UserHistoryTable histories={serachHistories} add={addHistory} setReceipt={setReceipt} deleteReceipt={deleteReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} />
                 </Paper>
               </Grid>
             </Grid>

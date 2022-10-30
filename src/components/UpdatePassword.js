@@ -18,11 +18,12 @@ export default function UpdatePassword() {
     const data = new FormData(event.currentTarget);
     
     if (data.get('new-password') !== data.get('check-password')) {
-      alert("바꾸려는 비밀번호가 일치하지 않습니다")
+      alert("비밀번호가 일치하지 않습니다")
     }
     else {
       call("/member/password", "PUT", {password: data.get("new-password")}).then(res => {
-        alert("비밀번호가 수정되었습니다.")
+        alert("비밀번호가 수정되었습니다.");
+        window.location.href="/user-update";
       })
     }
   };

@@ -30,6 +30,9 @@ export function call(api, method, request) {
         console.log(error);
         if (error.status === 401) {
             window.location.href = "/signin"; // redirect
+        } 
+        else if (error.status === 403) {
+            window.location.href = "/access-denied"
         }
         return Promise.reject(error);
     })

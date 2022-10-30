@@ -7,10 +7,19 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, styled } from '@mui/material';
 import Calendar from './Calendar';
 import BasicSelect from './BasicSelect';
 import { Title } from '@mui/icons-material';
+
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  backgroundColor: '#9e9e9e',//theme.palette.primary.main,
+  color: 'white',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  padding: theme.spacing(1),
+}));
 
 const theme = createTheme();
 
@@ -22,6 +31,15 @@ export default function AddHistory(props) {
   const [memo, setMemo] = React.useState('');
 
   const categories = props.categories;
+
+  console.log(props.receipt)
+  const fileInput = React.useRef();
+
+  const handleFileChange = event => {
+    props.setReceipt(event.target.files);
+    // if (!props.receipt) return;
+    // event.target.value = null;
+  }
 
   const handleCategoryChange = (event) => {
     setCategory({id: event.target.value});
@@ -51,6 +69,8 @@ export default function AddHistory(props) {
     setCategory({id: ''});
     setMemo('');
     setAmount('');
+    props.setReceipt(null);
+    fileInput.current.value = '';
     props.initializeSearch();
   };
 
@@ -115,11 +135,16 @@ export default function AddHistory(props) {
                 />
               </Grid>
               <Grid item xs={2}>
+                <label htmlFor="files">
+                 <Div>영수증등록</Div>
+                </label>
                 <input 
                   type="file" 
                   multiple
-                  id="file" 
-                  onChange={(e) => { props.setReceipt(e.target.files); }} 
+                  id="files" 
+                  style={{ display: 'none' }}
+                  onChange={handleFileChange} 
+                  ref={fileInput}
                 />
               </Grid>
               <Grid item xs={12}>

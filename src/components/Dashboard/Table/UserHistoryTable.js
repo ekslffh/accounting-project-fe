@@ -11,6 +11,8 @@ import AddHistory from '../../AddHistory';
 import UpdateHistory from '../../UpdateHistory';
 import styled from '@emotion/styled';
 import CsvData from '../CsvData';
+import { ReceiptLong } from '@mui/icons-material';
+import BasicImageList from '../../BasicImageList';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -40,8 +42,11 @@ export default function UserHistoryTable(props) {
     setQuarter(event.target.value);
     setSearch((preSearch) => ({...preSearch, quarter: event.target.value}));
   };
-  const onClickDeleteButton = (id) => {
-    const item = {id}
+  const onClickDeleteButton = (row) => {
+    const item = {
+      id: row.id,
+      imagePath: row.imagePath
+    }
     props.delete(item);
     initializeSearch();
   }
@@ -133,9 +138,10 @@ export default function UserHistoryTable(props) {
             <TableCell>잔액</TableCell>
             <TableCell>비고</TableCell>
             <TableCell>작성자</TableCell>
+            <TableCell>영수증</TableCell>
             <TableCell align="right">
               <BasicModal name="추가">
-                <AddHistory add={props.add} categories={categories} initializeSearch={initializeSearch} />
+                <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} initializeSearch={initializeSearch} />
               </BasicModal>
               <Button>
                 <CsvData data={rows}/>
@@ -153,9 +159,14 @@ export default function UserHistoryTable(props) {
               <TableCell>{calcMoney(row.income, row.expenditure)}</TableCell>
               <TableCell>{row.memo}</TableCell>
               <TableCell>{row.member.name}</TableCell>
+              <TableCell>
+                {(row.imagePath.length !== 0) 
+                && 
+                <BasicModal name={<ReceiptLong />}><BasicImageList items={row.imagePath} /></BasicModal>}
+              </TableCell>
               <TableCell align="right">
-                <BasicModal name="수정" color="warning"><UpdateHistory categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
-                <Button size='small' color='error' onClick={() => {onClickDeleteButton(row.id)}}>삭제</Button>
+                <BasicModal name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
+                <Button size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
               </TableCell>
             </TableRow>
           ))}

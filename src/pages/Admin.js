@@ -1,5 +1,5 @@
 import React from "react";
-import Departments from "./Departments";
+import Departments from "../components/Departments";
 
 class Admin extends React.Component {
     constructor(props) {

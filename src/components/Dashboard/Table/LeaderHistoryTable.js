@@ -11,7 +11,8 @@ import AddHistory from '../../AddHistory';
 import UpdateHistory from '../../UpdateHistory';
 import styled from '@emotion/styled';
 import CsvData from '../CsvData';
-import { ReceiptLong, ReceiptLongOutlined } from '@mui/icons-material';
+import { Propane, ReceiptLong, ReceiptLongOutlined } from '@mui/icons-material';
+import BasicImageList from '../../BasicImageList';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -49,8 +50,11 @@ export default function LeaderHistoryTable(props) {
     setQuarter(event.target.value);
     setSearch((preSearch) => ({...preSearch, quarter: event.target.value}));
   };
-  const onClickDeleteButton = (id) => {
-    const item = {id}
+  const onClickDeleteButton = (row) => {
+    const item = {
+      id: row.id,
+      imagePath: row.imagePath
+    }
     props.delete(item);
     initializeSearch();
   }
@@ -178,10 +182,14 @@ export default function LeaderHistoryTable(props) {
               <TableCell>{calcMoney(row.income, row.expenditure)}</TableCell>
               <TableCell>{row.memo}</TableCell>
               <TableCell>{row.member.name}</TableCell>
-              <TableCell align='center'><a href={row.imagePath} alt="receipt" target="_blank"><ReceiptLong /></a></TableCell>
+              <TableCell>
+                {(row.imagePath.length !== 0) 
+                && 
+                <BasicModal name={<ReceiptLong />}><BasicImageList items={row.imagePath} /></BasicModal>}
+              </TableCell>
               <TableCell align="right">
-                <BasicModal name="수정" color="warning"><UpdateHistory categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
-                <Button size='small' color='error' onClick={() => {onClickDeleteButton(row.id)}}>삭제</Button>
+                <BasicModal name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
+                <Button size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
               </TableCell>
             </TableRow>
           ))}

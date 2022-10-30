@@ -7,11 +7,29 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { FormControl, InputLabel, MenuItem, Select, Switch } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, styled, Switch } from '@mui/material';
 import Calendar from './Calendar';
 import BasicSelect from './BasicSelect';
 
 const theme = createTheme();
+
+const UpdateButton = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  backgroundColor: '#64b5f6',//theme.palette.primary.main,
+  color: 'white',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  padding: theme.spacing(1),
+}));
+
+const DeleteButton = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  backgroundColor: '#ef5350',//theme.palette.primary.main,
+  color: 'white',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  padding: theme.spacing(1),
+}));
 
 export default function UpdateHistory(props) {
   const item = props.item;
@@ -28,6 +46,14 @@ export default function UpdateHistory(props) {
     setCategory({id: event.target.value});
   };
 
+  const fileInput = React.useRef();
+  const isHaveImage = (item.imagePath.length !== 0);
+  console.log(isHaveImage)
+  const handleFileChange = event => {
+    props.setReceipt(event.target.files);
+    // if (!props.receipt) return;
+    // event.target.value = null;
+  }
 
   React.useEffect(() => {
     if (item.income === 0) {
@@ -69,10 +95,20 @@ export default function UpdateHistory(props) {
       inputData.expenditure = 0;
     }
     inputData.id = item.id;
+    inputData.imagePath = props.imagePath;
     props.update(inputData);
+    props.setReceipt(null);
     props.initializeSearch();
-    alert("내역이 수정되었습니다.")
+    fileInput.current.value = '';
   };
+
+  const onClickDeleteReceiptButton = () => {
+    const inputData = {
+      id: item.id,
+      imagePath: props.imagePath
+    };
+    props.deleteReceipt(inputData);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,7 +125,11 @@ export default function UpdateHistory(props) {
             사용내역 수정
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
+            <Grid 
+              container 
+              spacing={2}
+              alignItems="center"
+            >
               <Grid item xs={5}>
                   <Calendar fullWidth dateTime={dateTime} setDateTime={setDateTime}/>   
               </Grid>
@@ -107,10 +147,14 @@ export default function UpdateHistory(props) {
                   </Select>
               </FormControl>
               </Grid>
-              <Grid item xs={3}>
+             {
+             isHaveImage 
+             ?
+             <>
+               <Grid item xs={3}>
                 <BasicSelect inOrOut={inOurOut} setExpenditure={setExpenditure}/>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={5}>
                 <TextField
                   required
                   fullWidth
@@ -122,6 +166,55 @@ export default function UpdateHistory(props) {
                   onChange={handleAmountChange}
                 />
               </Grid>
+              <Grid item xs={2}>
+                <label htmlFor="files">
+                  <UpdateButton>영수증수정</UpdateButton>
+                </label>
+                <input 
+                  type="file" 
+                  multiple
+                  id="files" 
+                  style={{ display: 'none' }}
+                  onChange={handleFileChange} 
+                  ref={fileInput}
+                />
+              </Grid>
+              <Grid item xs={2}>
+                <DeleteButton onClick={onClickDeleteReceiptButton}>영수증삭제</DeleteButton>
+              </Grid>
+             </> 
+             :
+             <>
+               <Grid item xs={3}>
+                <BasicSelect inOrOut={inOurOut} setExpenditure={setExpenditure}/>
+              </Grid>
+              <Grid item xs={7}>
+                <TextField
+                  required
+                  fullWidth
+                  id="amount"
+                  label="금액"
+                  name="amount"
+                  autoComplete="amount"
+                  value={amount}
+                  onChange={handleAmountChange}
+                />
+              </Grid>
+              <Grid item xs={2}>
+                <label htmlFor="files">
+                  <UpdateButton>영수증등록</UpdateButton>
+                </label>
+                <input 
+                  type="file" 
+                  multiple
+                  id="files" 
+                  style={{ display: 'none' }}
+                  onChange={handleFileChange} 
+                  ref={fileInput}
+                />
+              </Grid>
+             </>
+             }
               <Grid item xs={12}>
                 <TextField
                   fullWidth

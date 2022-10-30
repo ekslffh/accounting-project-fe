@@ -1,7 +1,7 @@
 import { Container, List, Paper } from "@mui/material";
 import React from "react";
-import AddDepart from "../components/AddDepart";
-import Department from "../components/Department";
+import AddDepart from "./AddDepart";
+import Department from "./Department";
 import { call } from "../service/ApiService";
 
 class Departments extends React.Component {
@@ -17,19 +17,28 @@ class Departments extends React.Component {
        })
     }
     add = (item) => {
-        call("/department", "POST", item).then(response => {
-            this.setState({ items: response.data })
+        call("/department", "POST", item)
+        .then(response => {
+            this.setState({ items: response.data });
+            alert("부서가 추가되었습니다");
         })
+        .catch(err => console.log(err));
     }
     delete = (item) => {
-        call("/department", "DELETE", item).then(response => {
-            this.setState({ items: response.data })
+        call("/department", "DELETE", item)
+        .then(response => {
+            this.setState({ items: response.data });
+            alert("부서가 삭제되었습니다");
         })
+        .catch(err => console.log(err));
     }
     update = (item) => {
-        call("/department", "PUT", item).then(response => {
-            this.setState({ items: response.data })
+        call("/department", "PUT", item)
+        .then(response => {
+            this.setState({ items: response.data });
+            alert("부서가 수정되었습니다");
         })
+        .catch(err => console.log(err));
     }
     render() {
         var departmentItems = this.state.items.length > 0 && (

@@ -10,14 +10,6 @@ import BasicModal from '../../BasicModal';
 import AddCategory from '../../AddCategory';
 import UpdateCategory from '../../UpdateCategory';
 
-function createData(id, title, description) {
-  return { id, title, description };
-}
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
 /**
  * 
  * @param {*} props 
