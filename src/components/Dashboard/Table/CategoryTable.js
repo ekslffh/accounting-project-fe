@@ -32,7 +32,10 @@ export default function Orders_category(props) {
           <TableRow>
             <TableCell>이름</TableCell>
             <TableCell>설명</TableCell>
-            <TableCell align="right"><BasicModal name="추가"><AddCategory add={props.add} /></BasicModal></TableCell>
+            <TableCell align="right">
+              <BasicModal name="추가"><AddCategory add={props.add} /></BasicModal>
+              <BasicModal name="복구">복구요</BasicModal>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

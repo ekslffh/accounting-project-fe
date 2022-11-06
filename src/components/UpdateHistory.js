@@ -48,11 +48,8 @@ export default function UpdateHistory(props) {
 
   const fileInput = React.useRef();
   const isHaveImage = (item.imagePath.length !== 0);
-  console.log(isHaveImage)
   const handleFileChange = event => {
     props.setReceipt(event.target.files);
-    // if (!props.receipt) return;
-    // event.target.value = null;
   }
 
   React.useEffect(() => {

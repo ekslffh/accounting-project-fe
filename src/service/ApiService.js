@@ -29,6 +29,7 @@ export function call(api, method, request) {
     .catch(error => {
         console.log(error);
         if (error.status === 401) {
+            logout();
             window.location.href = "/signin"; // redirect
         } 
         else if (error.status === 403) {
@@ -60,11 +61,17 @@ export function signIn(member) {
     .then(res => {
         const role = res.authority[0].authorityName.substring(5); 
         const department = res.department.name;
+        const user = {
+            "name": res.name,
+            "department": department,
+            "role": role
+        }
         localStorage.setItem("token", res.token);
         localStorage.setItem("name", res.name);
         localStorage.setItem("role", role);
         localStorage.setItem("department", department);
-        window.location.href = "/";
+        // localStorage.setItem("USR_CONFIG", JSON.stringify(user));
+        window.location.href = "/" + new Date().getFullYear();
     })
     .catch(res => alert(res.error));
     ;

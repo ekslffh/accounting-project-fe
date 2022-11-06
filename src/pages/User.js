@@ -13,10 +13,7 @@ function DashboardContent() {
   const [categories, setCategories] = React.useState([]);
   const [histories, setHistories] = React.useState([]);
   const [serachHistories, setSearchHistories] = React.useState([]);
-
   const [receipt, setReceipt] = React.useState(null);
-
-  console.log(histories)
 
   // 카테고리, 분기로 필터링하는 함수
   function filterHistories(search) {
@@ -34,7 +31,7 @@ function DashboardContent() {
 
   // 수입, 지출 내역 관련 함수
   const getHistories = () => {
-    call("/member/histories", "GET", null)
+    call("/member/histories" + "?year=" + new Date().getFullYear(), "GET", null)
       .then(res => {
       setHistories(res.data);
     });
@@ -51,7 +48,7 @@ function DashboardContent() {
     data.append("history", new Blob([JSON.stringify(item)], {
       type: "application/json"
     }));
-    axios.post(API_BASE_URL + "/history", data, {
+    axios.post(API_BASE_URL + "/history" + "?year=" + new Date().getFullYear(), data, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
       },
@@ -59,34 +56,45 @@ function DashboardContent() {
     .then((res) => 
       setHistories(res.data.data)
     )
+    .then(res => alert("내역이 추가되었습니다."))
     .catch(res => console.log(res.data.error))
   };
 
   const deleteHistory = (item) => {
-    call("/history", "DELETE", item).then(res => {
-      setHistories(res.data);
-    })
-    .catch(err => console.log(err));
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      call("/history" + "?year=" + new Date().getFullYear(), "DELETE", item)
+      .then(res => {
+        setHistories(res.data);
+      })
+      .then(res => alert("내역이 삭제되었습니다."))
+      .catch(err => console.log(err));
+    } else {
+      alert("취소되었습니다.")
+    }
+    
   };
 
   const deleteReceipt = (item) => {
-    axios.delete(API_BASE_URL + "/history/receipt", {
-      data: item,
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token"),
-      }
-    })
-    .then(res => {
-      alert("영수증이 삭제되었습니다.")
-      setHistories(res.data.data);
-    })
-    .catch(res => console.log(res.data.error));
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      axios.delete(API_BASE_URL + "/history/receipt" + "?year=" + new Date().getFullYear(), {
+        data: item,
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token"),
+        }
+      })
+      .then(res => {
+        alert("영수증이 삭제되었습니다.");
+        setHistories(res.data.data);
+      })
+      .catch(res => console.log(res.data.error));
+    } else {
+      alert("취소되었습니다.");
+    }
+    
   }
 
   const updateHistory = (item) => {
     var data = new FormData();
-    console.log("receipt: ", receipt);
-
     if (receipt !== null) {
       for (let i = 0; i < receipt.length; i++) {
         data.append("receipts", receipt[i]);
@@ -95,7 +103,7 @@ function DashboardContent() {
     data.append("history", new Blob([JSON.stringify(item)], {
       type: "application/json"
     }));
-    axios.put(API_BASE_URL + "/history", data, {
+    axios.put(API_BASE_URL + "/history" + "?year=" + new Date().getFullYear(), data, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
       },
@@ -105,10 +113,6 @@ function DashboardContent() {
       setHistories(res.data.data);
     })
     .catch(res => console.log(res.data.error))
-    // call("/history", "PUT", item).then(res => {
-    //   setHistories(res.data.data);
-    // })
-    // .catch(res => console.log(res.data.error));
   };
 
   React.useEffect(() => {

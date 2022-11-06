@@ -201,7 +201,6 @@ export default function EnhancedTable(props) {
   const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const histories = props.histories;
-  // console.log(histories);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -212,7 +211,6 @@ export default function EnhancedTable(props) {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = histories.map((n) => n.id);
-      console.log("newSElected:", newSelected);
       setSelected(newSelected);
       return;
     }
@@ -239,7 +237,6 @@ export default function EnhancedTable(props) {
   };
 
   const getSelected = () => {
-    console.log(selected);
     props.delete(selected[0]);
   }
 
@@ -262,7 +259,6 @@ export default function EnhancedTable(props) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - histories.length) : 0;
 
-    console.log(histories[0]);
   const items = histories.map(item => 
     ({
       id: item.id,
@@ -274,7 +270,6 @@ export default function EnhancedTable(props) {
       writer: item.member.name,
     })
   );
-  console.log(items)
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
@@ -300,7 +295,6 @@ export default function EnhancedTable(props) {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((item, index) => {
                   const isItemSelected = isSelected(item.id);
-                  console.log("item check", item.Checkbox)
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (

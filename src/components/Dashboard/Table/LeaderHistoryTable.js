@@ -13,6 +13,9 @@ import styled from '@emotion/styled';
 import CsvData from '../CsvData';
 import { Propane, ReceiptLong, ReceiptLongOutlined } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
+import { YearPicker } from '@mui/x-date-pickers';
+import ChangeYear from '../../ChangeYear';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -22,7 +25,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export default function LeaderHistoryTable(props) {
-  console.log("histories: ", props.histories)
   const [category, setCategory] = React.useState({id: ''});
   const [member, setMember] = React.useState({id: ''});
   const [quarter, setQuarter] = React.useState('');
@@ -100,7 +102,7 @@ export default function LeaderHistoryTable(props) {
     <React.Fragment>
       <Grid container spacing={1}>
         <Grid item xs={3}>
-        <Title>사용현황</Title>
+        <Title>내역현황</Title>
         </Grid>
         <Grid item xs={3}>
           <FormControl fullWidth>
@@ -202,6 +204,7 @@ export default function LeaderHistoryTable(props) {
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
+            <TableCell align='right'><BasicModal name="연도변경"><ChangeYear /></BasicModal></TableCell>
           </TableRow>
         </TableBody>
       </Table>

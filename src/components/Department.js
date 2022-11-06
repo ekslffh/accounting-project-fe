@@ -16,9 +16,7 @@ class Department extends React.Component {
         this.delete(this.state.item);
     }
     offReadOnlyMode = () => {
-        console.log("Event!", this.state.readOnly)
         this.setState({ readOnly: false }, () => {
-            console.log("ReadOnly? ", this.state.readOnly)
         });
     }
     enterKeyEventHandler = (e) => {

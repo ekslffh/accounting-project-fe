@@ -10,11 +10,10 @@ import { call, isCorrectQuarter } from '../service/ApiService';
 import LeaderHistoryTable from '../components/Dashboard/Table/LeaderHistoryTable';
 import { API_BASE_URL } from '../config/app-config';
 import axios from 'axios';
-import BasicModal from '../components/BasicModal';
-import BasicImageList from '../components/BasicImageList';
 
 export default function Leader(props) {
   const [department, ] = React.useState({ name: props.match.params.name });
+  const [year, ] = React.useState(props.match.params.year);
   const [categories, setCategories] = React.useState([]);
   const [members, setMembers] = React.useState([]);
   const [histories, setHistories] = React.useState([]);
@@ -90,16 +89,14 @@ export default function Leader(props) {
 
   // 수입, 지출 내역 관련 함수
   const getHistories = () => {
-    call("/department/histories?name=" + department.name, "GET", null)
+    call("/department/histories?name=" + department.name + "&year=" + year, "GET", null)
     .then(res => {
-      console.log(res.data);
       setHistories(res.data);
     })
     .catch(err => console.log(err));
   };
   const addHistory = (item) => {
     var data = new FormData();
-    console.log("receipt: ", receipt);
     
     if (receipt !== null) {
       for (let i = 0; i < receipt.length; i++) {
@@ -109,46 +106,45 @@ export default function Leader(props) {
     data.append("history", new Blob([JSON.stringify(item)], {
       type: "application/json"
     }));
-    axios.post(API_BASE_URL + "/history", data, {
+    axios.post(API_BASE_URL + "/history/department" + "?year=" + year, data, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
       },
     })
     .then(res => {
-      getHistories();
+      console.log("res", res.data.data)
+      setHistories(res.data.data);
     })
     .catch(err => console.log(err));
     ;
   };
   const deleteHistory = (item) => {
-    call("/history", "DELETE", item).then(res => {
-    }).then(res => getHistories())
-    .catch(err => console.log(err));
+    if (window.confirm("정말 삭제하시겠습니까?")) { 
+      call("/history/department" + "?year=" + year, "DELETE", item).then(res => {
+      })
+      .then(res => setHistories(res.data))
+      .then(res => alert("내역이 삭제되었습니다."))
+      .catch(err => console.log(err));
+    } else {
+      alert("취소되었습니다.");
+    }
+    
   };
   const deleteReceipt = (item) => {
-    console.log(item);
-    axios.delete(API_BASE_URL + "/history/receipt", {
+    axios.delete(API_BASE_URL + "/history/receipt/department" + "?year=" + year, {
       data: item,
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
       }
     })
     .then(res => {
+      setHistories(res.data.data)
       alert("영수증이 삭제되었습니다.")
-      getHistories();
     })
     .catch(err => console.log(err));
-    // call("/history/receipt", "DELETE", item)
-    // .then(res => {
-    //   alert("영수증이 삭제되었습니다")
-    //   getHistories();
-    // })
-    // .catch(err => console.log(err)); 
   }
   const updateHistory = (item) => {
     var data = new FormData();
-    console.log("receipt: ", receipt);
-
     if (receipt !== null) {
       for (let i = 0; i < receipt.length; i++) {
         data.append("receipts", receipt[i]);
@@ -157,22 +153,16 @@ export default function Leader(props) {
     data.append("history", new Blob([JSON.stringify(item)], {
       type: "application/json"
     }));
-    console.log("data: ", data);
-    axios.put(API_BASE_URL + "/history", data, {
+    axios.put(API_BASE_URL + "/history/department" + "?year=" + year, data, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
       },
     })
     .then(res => {
+      setHistories(res.data.data)
       alert("내역이 수정되었습니다.")
-      getHistories();
     })
     .catch(err => console.log(err));
-    
-    // call("/history", "PUT", item).then(res => {
-    // })
-    // .then(res => getHistories())
-    // .catch(err => console.log(err));
   };
 
   // 카테고리, 분기로 필터링하는 함수
@@ -199,10 +189,6 @@ export default function Leader(props) {
   React.useEffect(() => {
     setFilteredHistories(histories);
   }, [histories])
-
-  React.useEffect(() => {
-    console.log(receipt);
-  }, [receipt])
 
   return (
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>

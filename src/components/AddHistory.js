@@ -10,7 +10,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select, styled } from '@mui/material';
 import Calendar from './Calendar';
 import BasicSelect from './BasicSelect';
-import { Title } from '@mui/icons-material';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -32,7 +31,6 @@ export default function AddHistory(props) {
 
   const categories = props.categories;
 
-  console.log(props.receipt)
   const fileInput = React.useRef();
 
   const handleFileChange = event => {

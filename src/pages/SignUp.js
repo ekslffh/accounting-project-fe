@@ -80,6 +80,7 @@ export default function SignUp() {
   }
   // 1999 2월 1일 -> 1999.2.1
   function parseDate(y, m, d) {
+    if (d.charAt(0) === '0') d = d.charAt(1);
     return y + "." + m + "." + d;
   }
 
@@ -93,7 +94,16 @@ export default function SignUp() {
   const [phoneAuthCheck, setPhoneAuthCheck] = React.useState(false);
   // messageNumber : 내가 입력하는 인증번호
   const [messageNumber, setMessageNumber] = React.useState('');
+  const [authPhoneNumber, setAuthPhoneNumber] = React.useState('');
+
   const handlePhoneNumberChange = (event) => {
+      if (authPhoneNumber !== event.target.value) {
+        setMessageNumber('');
+        setPhoneAuthCheck(false);
+      }
+      else {
+        setPhoneAuthCheck(true);
+      }
       setPhoneNumber(event.target.value);
   }
   const handleMessage = (event) => {
@@ -109,6 +119,7 @@ export default function SignUp() {
     // 실제 인증번호(authNumber)와 메시지로 받아 입력한 값(messageNumber)를 비교한다
     if (authNumber === messageNumber) {
       setPhoneAuthCheck(true);
+      setAuthPhoneNumber(phoneNumber);
       alert("휴대폰 인증 완료하였습니다.");
     }
     else {

@@ -25,12 +25,18 @@ class Departments extends React.Component {
         .catch(err => console.log(err));
     }
     delete = (item) => {
-        call("/department", "DELETE", item)
-        .then(response => {
-            this.setState({ items: response.data });
-            alert("부서가 삭제되었습니다");
-        })
-        .catch(err => console.log(err));
+        if (window.confirm("정말 삭제하시겠습니까?")) { 
+            call("/department", "DELETE", item)
+            .then(response => {
+                this.setState({ items: response.data });
+                alert("부서가 삭제되었습니다");
+            })
+            .catch(err => console.log(err));
+        }
+        else {
+            alert("취소되었습니다.");
+        }
+       
     }
     update = (item) => {
         call("/department", "PUT", item)

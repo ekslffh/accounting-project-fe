@@ -54,6 +54,7 @@ export default function UserUpdate() {
 
   // 1999 2월 1일 -> 1999.02.01
   function parseDate(y, m, d) {
+    if (d.charAt(0) === '0') d = d.charAt(1);
     return y + "." + m + "." + d;
   }
 
@@ -79,8 +80,6 @@ export default function UserUpdate() {
         birth,
         phoneNumber,
     };
-
-    console.log("senderMember: ", senderMember);
 
     call("/member", "PUT", senderMember)
     .then(res => {
@@ -113,10 +112,10 @@ export default function UserUpdate() {
   const [isPhoneAuth, setIsPhoneAuth] = React.useState(false);
 
   const onClickPhoneRequest = () => {
-    console.log("실제 인증번호: ", authNumber);
-    console.log("입력 인증번호: ", messageNumber);
-    console.log("실제 인증번호 타입: ", typeof(authNumber));
-    console.log("입력 인증번호 타입: ", typeof(messageNumber));
+    // console.log("실제 인증번호: ", authNumber);
+    // console.log("입력 인증번호: ", messageNumber);
+    // console.log("실제 인증번호 타입: ", typeof(authNumber));
+    // console.log("입력 인증번호 타입: ", typeof(messageNumber));
     if (authNumber === messageNumber) {
       setIsPhoneAuth(true);
       alert("휴대폰 인증 완료하였습니다.");

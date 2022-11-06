@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
 import { Button } from '@mui/material';
 import styled from '@emotion/styled';
+import BasicModal from '../../BasicModal';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -51,7 +52,7 @@ export default function Orders_member(props) {
             <TableCell>생년월일</TableCell>
             <TableCell>가입일</TableCell>
             <TableCell>직급</TableCell>
-            <TableCell></TableCell>
+            <TableCell align='right'><BasicModal name="복구">복구요</BasicModal></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
