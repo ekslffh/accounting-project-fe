@@ -9,6 +9,8 @@ import { Button } from '@mui/material';
 import BasicModal from '../../BasicModal';
 import AddCategory from '../../AddCategory';
 import UpdateCategory from '../../UpdateCategory';
+import { call } from '../../../service/ApiService';
+import DeletedCategoryTable from './DeletedCategoryTable';
 
 /**
  * 
@@ -19,10 +21,15 @@ export default function Orders_category(props) {
 
   const rows = props.categories;
 
+
   const onClickDeleteButton = (id) => {
     const item = {id}
       props.delete(item);
   }
+
+  // React.useEffect(() => {
+  //   getDeletedCategories();
+  // }, []);
 
   return (
     <React.Fragment>
@@ -34,7 +41,8 @@ export default function Orders_category(props) {
             <TableCell>설명</TableCell>
             <TableCell align="right">
               <BasicModal name="추가"><AddCategory add={props.add} /></BasicModal>
-              <BasicModal name="복구">복구요</BasicModal>
+              <BasicModal name="복구"><DeletedCategoryTable /></BasicModal>
+              {/* <button onClick={() => {getDeletedCategories("청년부")}}>버튼</button> */}
             </TableCell>
           </TableRow>
         </TableHead>

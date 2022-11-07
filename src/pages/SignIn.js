@@ -26,7 +26,7 @@ export default function SignIn() {
   };
 
   const onClickDashBoard = () => {
-    window.location.href = "/";
+    window.location.href = "/home";
   }
 
   // 로그인, 비로그인 상태 구분해서 내용 출력하기

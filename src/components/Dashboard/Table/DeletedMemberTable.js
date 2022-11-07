@@ -7,8 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
 import { Button } from '@mui/material';
 import styled from '@emotion/styled';
-import BasicModal from '../../BasicModal';
-import DeletedMemberTable from './DeletedMemberTable';
+import { call } from '../../../service/ApiService';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -21,16 +20,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-export default function Orders_member(props) {
+export default function DeletedMemberTable(props) {
 
-  const [categories, setCategories] = React.useState([]);
-  const [category, setCategory] = React.useState({id: ''});
-  const rows = props.members;
-
-  const onClickDeleteButton = (email) => {
-    const item = {email}
-    props.delete(item);
-  }
+  const [members, setMembers] = React.useState([]);
 
   // LocalDateTime -> xxxx년 xx월 xx일 변환하는 함수
   function parseDate(date) {
@@ -40,6 +32,29 @@ export default function Orders_member(props) {
     const day = (date.charAt(8) !== '0') ? date.substr(8,2) : date.substr(9,1);
     return `${year}년 ${month}월 ${day}일`;
   }
+
+  const getDeletedMembers = (name) => {
+    call("/member/deleted?name=" + name, "GET", null) 
+    .then(res => {
+      console.log(res.data);
+      setMembers(res.data);
+    })
+    .catch(res => console.log(res.error));
+  }
+
+  const onClickRecoverButton = (id) => {
+    call("/member/recover", "PUT", {id})
+    .then(res => {
+      setMembers(res.data);
+      alert("복구가 완료되었습니다.");
+      window.location.reload();
+    })
+    .catch(res => console.log(res.error));
+  }
+
+  React.useEffect(() => {
+    getDeletedMembers(localStorage.getItem("department"));
+  }, [])
 
   return (
     <React.Fragment>
@@ -53,11 +68,11 @@ export default function Orders_member(props) {
             <TableCell>생년월일</TableCell>
             <TableCell>가입일</TableCell>
             <TableCell>직급</TableCell>
-            <TableCell align='right'><BasicModal name="복구"><DeletedMemberTable /></BasicModal></TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-           {rows.map((row) => 
+           {members.map((row) => 
             (row.authority[0].authorityName === 'ROLE_LEADER')
             ?
             (
@@ -80,9 +95,7 @@ export default function Orders_member(props) {
                 <TableCell>{row.birth}</TableCell>
                 <TableCell>{parseDate(row.createdAt)}</TableCell>
                 <TableCell>멤버</TableCell>
-                <TableCell>    
-                  <Button size='small' color='error' onClick={() => {onClickDeleteButton(row.email)}}>삭제</Button>
-                </TableCell>
+                <TableCell align='right'><Button onClick={() => {onClickRecoverButton(row.id)}}>복구</Button></TableCell>
               </TableRow>
             )
            )}

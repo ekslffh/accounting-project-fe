@@ -25,6 +25,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export default function LeaderHistoryTable(props) {
+
   const [category, setCategory] = React.useState({id: ''});
   const [member, setMember] = React.useState({id: ''});
   const [quarter, setQuarter] = React.useState('');

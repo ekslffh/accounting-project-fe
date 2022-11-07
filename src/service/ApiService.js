@@ -50,7 +50,7 @@ export function getDepartments() {
 export function signUp(member) {
     call("/auth/signup", "POST", member)
     .then(res => {
-        window.location.href = "/"
+        window.location.href = "/signin"
     })
     .catch(err =>  console.log(err));
 }
