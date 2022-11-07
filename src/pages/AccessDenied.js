@@ -9,7 +9,7 @@ const theme = createTheme();
 
 export default function AccessDenied() {
   
-  const onClickHomeButton = () => { window.location.href = "/"; }
+  const onClickHomeButton = () => { window.location.href = "/" + new Date().getFullYear(); }
   return (
     <>
           <Container maxWidth="sm">

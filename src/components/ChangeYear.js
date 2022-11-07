@@ -15,9 +15,9 @@ export default function UpdatePassword() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
-    console.log(data.get('year'))
-    window.location.href = "/" + data.get('year')
+    const year = data.get('year');
+    if (isNaN(year)) alert("숫자만 입력가능합니다.");
+    else window.location.href = "/" + data.get('year')
   };
 
   return (

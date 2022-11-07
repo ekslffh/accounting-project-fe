@@ -12,7 +12,7 @@ const theme = createTheme();
 
 export default function NotFound() {
 
-  const onClickHomeButton = () => { window.location.href = "/"; }
+  const onClickHomeButton = () => { window.location.href = "/" + new Date().getFullYear(); }
 
   return (
     <>

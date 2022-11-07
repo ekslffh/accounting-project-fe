@@ -18,7 +18,7 @@ const onClickDashBoard = () => {
   // else if (role === "LEADER") window.location.href = "/leader/" + department;
   // else if (role === "ADMIN") window.location.href = "/admin";
   // else window.location.href = "/signin";
-  window.location.href = "/";
+  window.location.href = "/" + new Date().getFullYear();
 }
 
 const onClickAccount = () => {

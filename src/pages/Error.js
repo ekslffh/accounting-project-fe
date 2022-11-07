@@ -36,7 +36,7 @@ const theme = createTheme();
 export default function Home() {
 
   const onClickHomeButton = () => {
-    window.location.href = "/"
+    window.location.href = "/" + new Date().getFullYear();
   }
 
   return (
