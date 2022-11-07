@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CalendarMonth } from '@mui/icons-material';
 
 const theme = createTheme();
-export default function UpdatePassword() {
+export default function ChangeYear() {
 
   const handleSubmit = (event) => {
     event.preventDefault();

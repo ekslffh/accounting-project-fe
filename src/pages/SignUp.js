@@ -117,7 +117,7 @@ export default function SignUp() {
   }
   const onClickPhoneAuthButton = () => {
     // 실제 인증번호(authNumber)와 메시지로 받아 입력한 값(messageNumber)를 비교한다
-    if (authNumber === messageNumber) {
+    if (authNumber !== '' && authNumber === messageNumber) {
       setPhoneAuthCheck(true);
       setAuthPhoneNumber(phoneNumber);
       alert("휴대폰 인증 완료하였습니다.");

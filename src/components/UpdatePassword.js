@@ -71,7 +71,7 @@ export default function UpdatePassword() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              수정
+              변경
             </Button>
           </Box>
         </Box>

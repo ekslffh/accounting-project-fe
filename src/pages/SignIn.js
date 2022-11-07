@@ -11,6 +11,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signIn } from '../service/ApiService';
 import { LockOutlined } from '@mui/icons-material';
+import BasicModal from '../components/BasicModal';
+import FindID from './FindID';
+import FindPW from './FindPW';
 
 const theme = createTheme();
 
@@ -73,9 +76,12 @@ export default function SignIn() {
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      <Link href="#" variant="body2">
-                        아이디, 비밀번호 찾기
-                      </Link>
+                      <BasicModal name="아이디"><FindID /></BasicModal>
+                      <span>  </span>
+                      <BasicModal name="비밀번호찾기"><FindPW /></BasicModal>
+                      {/* <Link href="#" variant="body2">
+                        비밀번호 찾기
+                      </Link> */}
                     </Grid>
                     <Grid item>
                       <Link href="/signup" variant="body2">
