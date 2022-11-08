@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { call } from '../service/ApiService';
+import axios from 'axios';
+import { API_BASE_URL } from '../config/app-config';
 
 const theme = createTheme();
 
@@ -49,8 +51,11 @@ export default function FindID() {
   const onClickPhoneRequestButton = () => {
     setSendPhoneRequest(true);
     // 서버로 요청보내고 인증번호 4자리값 저장 (이후에 입력한 값과 비교한다)
-    call("/auth/phone", "POST", {"receiver": phoneNumber})
-    .then(response => setAuthNumber(response.toString()));
+    // call("/auth/phone", "POST", {"receiver": phoneNumber})
+    // .then(response => setAuthNumber(response.toString()));
+    axios.post(API_BASE_URL + "/auth/phone", {"receiver": phoneNumber})
+    .then(res => setAuthNumber(res.data.toString()))
+    .catch(err => console.log(err));
   }
 
   const onClickPhoneAuthButton = () => {

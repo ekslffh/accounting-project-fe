@@ -12,6 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { call, getDepartments, signUp } from '../service/ApiService';
 import { Done } from '@mui/icons-material';
+import axios from 'axios';
+import { API_BASE_URL } from '../config/app-config';
 
 const theme = createTheme();
 
@@ -111,9 +113,13 @@ export default function SignUp() {
   }
   const onClickPhoneRequestButton = () => {
     setSendPhoneRequest(true);
+    // console.log("phoneNumber:", phoneNumber);
     // 서버로 요청보내고 인증번호 4자리값 저장 (이후에 입력한 값과 비교한다)
-    call("/auth/phone", "POST", {"receiver": phoneNumber})
-    .then(response => setAuthNumber(response.toString()));
+    // call("/auth/phone", "POST", {"receiver": phoneNumber})
+    // .then(response => setAuthNumber(response.toString()));
+    axios.post(API_BASE_URL + "/auth/phone", {"receiver": phoneNumber})
+    .then(res => setAuthNumber(res.data.toString()))
+    .catch(err => console.log(err));
   }
   const onClickPhoneAuthButton = () => {
     // 실제 인증번호(authNumber)와 메시지로 받아 입력한 값(messageNumber)를 비교한다
@@ -124,6 +130,9 @@ export default function SignUp() {
     }
     else {
       setMessageNumber('');
+      // console.log("같은지", authNumber === messageNumber)
+      // console.log("타입", typeof(authNumber));
+      // console.log("타입2", typeof(messageNumber));
       alert("휴대폰 인증 실패하였습니다.")
     }
     setSendPhoneRequest(false);

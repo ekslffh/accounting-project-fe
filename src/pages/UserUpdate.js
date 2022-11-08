@@ -13,6 +13,8 @@ import { call } from '../service/ApiService';
 import BasicModal from '../components/BasicModal';
 import UpdatePassword from '../components/UpdatePassword';
 import { Done } from '@mui/icons-material';
+import { API_BASE_URL } from '../config/app-config';
+import axios from 'axios';
 
 const theme = createTheme();
 
@@ -101,8 +103,9 @@ export default function UserUpdate() {
 
   const onClickAuthPhone = () => {
     setPhoneRequest(true);
-    call("/auth/phone", "POST", {"receiver": phoneNumber})
-    .then(response => setAuthNumber(response.toString()));
+    axios.post(API_BASE_URL + "/auth/phone", {"receiver": phoneNumber})
+    .then(res => setAuthNumber(res.data.toString()))
+    .catch(err => console.log(err));
   }
 
   const [phoneRequest, setPhoneRequest] = React.useState(false);
