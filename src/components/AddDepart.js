@@ -47,7 +47,7 @@ class AddDepart extends React.Component {
                             value={this.state.email} 
                         />
                     </Grid>
-                    <Grid xs={1} md={1} item>
+                    <Grid xs={2} md={2} item>
                     <Button variant="outlined" fullWidth onClick={this.addItem}>
                         추가
                     </Button>

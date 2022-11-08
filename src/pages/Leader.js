@@ -112,18 +112,19 @@ export default function Leader(props) {
       },
     })
     .then(res => {
-      console.log("res", res.data.data)
       setHistories(res.data.data);
+      alert("내역이 추가되었습니다.")
     })
     .catch(err => console.log(err));
     ;
   };
   const deleteHistory = (item) => {
     if (window.confirm("정말 삭제하시겠습니까?")) { 
-      call("/history/department" + "?year=" + year, "DELETE", item).then(res => {
+      call("/history/department" + "?year=" + year, "DELETE", item)
+      .then(res => {
+        setHistories(res.data);
+        alert("내역이 삭제되었습니다.");
       })
-      .then(res => setHistories(res.data))
-      .then(res => alert("내역이 삭제되었습니다."))
       .catch(err => console.log(err));
     } else {
       alert("취소되었습니다.");

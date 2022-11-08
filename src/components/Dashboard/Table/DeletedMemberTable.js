@@ -36,7 +36,6 @@ export default function DeletedMemberTable(props) {
   const getDeletedMembers = (name) => {
     call("/member/deleted?name=" + name, "GET", null) 
     .then(res => {
-      console.log(res.data);
       setMembers(res.data);
     })
     .catch(res => console.log(res.error));

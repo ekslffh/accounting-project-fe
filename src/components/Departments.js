@@ -22,7 +22,9 @@ class Departments extends React.Component {
             this.setState({ items: response.data });
             alert("부서가 추가되었습니다");
         })
-        .catch(err => console.log(err));
+        .catch(res => {
+            alert(res.error);
+        });
     }
     delete = (item) => {
         if (window.confirm("정말 삭제하시겠습니까?")) { 

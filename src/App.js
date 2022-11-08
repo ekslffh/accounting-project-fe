@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import Admin from './pages/Admin';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
@@ -8,7 +8,7 @@ import User from "./pages/User";
 import Leader from "./pages/Leader";
 import AccessDenied from './pages/AccessDenied';
 import UserUpdate from './pages/UserUpdate';
-import { Badge, Box, Button, createTheme, CssBaseline, Divider, IconButton, List, ThemeProvider, Toolbar, Typography } from '@mui/material';
+import { AppBar, Avatar, Badge, Box, Button, createTheme, CssBaseline, Divider, IconButton, List, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import MuiAppBar from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
@@ -20,14 +20,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import ReceiptsPage from './components/SimpleComponent';
+import { deepOrange } from '@mui/material/colors';
+import { AccountCircleRounded } from '@mui/icons-material';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      {/* <Link color="inherit" to="/">
-        HSAP
-      </Link> */}
       HSAP {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -36,23 +35,23 @@ function Copyright(props) {
 
 const drawerWidth = 240;
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+// const AppBar = styled(MuiAppBar, {
+//   shouldForwardProp: (prop) => prop !== 'open',
+// })(({ theme, open }) => ({
+//   zIndex: theme.zIndex.drawer + 1,
+//   transition: theme.transitions.create(['width', 'margin'], {
+//     easing: theme.transitions.easing.sharp,
+//     duration: theme.transitions.duration.leavingScreen,
+//   }),
+//   ...(open && {
+//     marginLeft: drawerWidth,
+//     width: `calc(100% - ${drawerWidth}px)`,
+//     transition: theme.transitions.create(['width', 'margin'], {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.enteringScreen,
+//     }),
+//   }),
+// }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -91,7 +90,7 @@ export default function App() {
       <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute">
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -116,17 +115,16 @@ export default function App() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {localStorage.getItem('name')}
+              <a href={"/" + new Date().getFullYear()} style={{textDecoration: 'none', color: 'white'}}>HSAP</a>
+              {/* <span>({localStorage.getItem('name')})</span> */}
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+            <IconButton color="inherit" onClick={() => {window.location.href = "/user-update"}}>
+              <AccountCircleRounded />
             </IconButton>
             <Button onClick={logout} variant='Outlined'>로그아웃</Button>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
+        {/* <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -145,7 +143,7 @@ export default function App() {
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>
-        </Drawer>
+        </Drawer> */}
         <Box
           component="main"
           sx={{

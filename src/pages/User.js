@@ -9,8 +9,9 @@ import UserHistoryTable from '../components/Dashboard/Table/UserHistoryTable';
 import axios from 'axios';
 import { API_BASE_URL } from '../config/app-config';
 
-function DashboardContent() {
+export default function User(props) {
   const [categories, setCategories] = React.useState([]);
+  const [year, ] = React.useState(props.match.params.year);
   const [histories, setHistories] = React.useState([]);
   const [serachHistories, setSearchHistories] = React.useState([]);
   const [receipt, setReceipt] = React.useState(null);
@@ -31,7 +32,7 @@ function DashboardContent() {
 
   // 수입, 지출 내역 관련 함수
   const getHistories = () => {
-    call("/member/histories" + "?year=" + new Date().getFullYear(), "GET", null)
+    call("/member/histories" + "?year=" + year, "GET", null)
       .then(res => {
       setHistories(res.data);
     });
@@ -48,7 +49,7 @@ function DashboardContent() {
     data.append("history", new Blob([JSON.stringify(item)], {
       type: "application/json"
     }));
-    axios.post(API_BASE_URL + "/history" + "?year=" + new Date().getFullYear(), data, {
+    axios.post(API_BASE_URL + "/history/user" + "?year=" + year, data, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
       },
@@ -62,7 +63,7 @@ function DashboardContent() {
 
   const deleteHistory = (item) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      call("/history" + "?year=" + new Date().getFullYear(), "DELETE", item)
+      call("/history/user" + "?year=" + year, "DELETE", item)
       .then(res => {
         setHistories(res.data);
       })
@@ -76,7 +77,7 @@ function DashboardContent() {
 
   const deleteReceipt = (item) => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
-      axios.delete(API_BASE_URL + "/history/receipt" + "?year=" + new Date().getFullYear(), {
+      axios.delete(API_BASE_URL + "/history/receipt/user" + "?year=" + year, {
         data: item,
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("token"),
@@ -103,7 +104,7 @@ function DashboardContent() {
     data.append("history", new Blob([JSON.stringify(item)], {
       type: "application/json"
     }));
-    axios.put(API_BASE_URL + "/history" + "?year=" + new Date().getFullYear(), data, {
+    axios.put(API_BASE_URL + "/history/user" + "?year=" + year, data, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
       },
@@ -162,8 +163,4 @@ function DashboardContent() {
             </Grid>
           </Container>
   );
-}
-
-export default function Dashboard() {
-  return <DashboardContent />;
 }
