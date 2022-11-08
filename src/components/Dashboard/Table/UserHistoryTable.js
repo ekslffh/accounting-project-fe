@@ -13,6 +13,7 @@ import styled from '@emotion/styled';
 import CsvData from '../CsvData';
 import { ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
+import ChangeYear from '../../ChangeYear';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -179,6 +180,7 @@ export default function UserHistoryTable(props) {
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
+            <TableCell align='right'><BasicModal name="연도변경"><ChangeYear /></BasicModal></TableCell>
           </TableRow>
         </TableBody>
       </Table>

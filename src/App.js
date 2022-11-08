@@ -19,7 +19,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
-import Year from './pages/Year';
+import ReceiptsPage from './components/SimpleComponent';
 
 function Copyright(props) {
   return (
@@ -164,9 +164,9 @@ export default function App() {
               <Route path='/signup' exact component={SignUp} />
               <Route path="/signin" exact component={SignIn} />
               <Route path="/admin" exact component={Admin} />
+              <Route path="/receipt" exact component={ReceiptsPage} />
               <Route path="/leader/:name/:year" exact component={Leader} />
               <Route path="/user/:year" exact component={User} />
-              <Route path="/year" exact component={Year} />
               <Route path="/user-update" exact component={UserUpdate} />
               <Route path="/access-denied" exact component={AccessDenied} />
               <Route path="/:year" exact component={Home} />

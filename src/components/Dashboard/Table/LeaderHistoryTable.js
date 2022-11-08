@@ -11,10 +11,11 @@ import AddHistory from '../../AddHistory';
 import UpdateHistory from '../../UpdateHistory';
 import styled from '@emotion/styled';
 import CsvData from '../CsvData';
-import { Propane, ReceiptLong, ReceiptLongOutlined } from '@mui/icons-material';
+import { ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
-import { YearPicker } from '@mui/x-date-pickers';
 import ChangeYear from '../../ChangeYear';
+import SimpleComponent from '../../SimpleComponent';
+import PagingModal from '../../PagingModal';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -205,7 +206,9 @@ export default function LeaderHistoryTable(props) {
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <TableCell align='right'><BasicModal name="연도변경"><ChangeYear /></BasicModal></TableCell>
+            <TableCell align='right'>
+              <BasicModal name="연도변경"><ChangeYear /></BasicModal>
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

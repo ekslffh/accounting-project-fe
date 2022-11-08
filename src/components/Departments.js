@@ -16,8 +16,8 @@ class Departments extends React.Component {
         this.setState({ items: response.data });
        })
     }
-    add = (item) => {
-        call("/department", "POST", item)
+    add = (item, email) => {
+        call("/department?email=" + email, "POST", item)
         .then(response => {
             this.setState({ items: response.data });
             alert("부서가 추가되었습니다");

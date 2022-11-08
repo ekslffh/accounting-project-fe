@@ -2,10 +2,10 @@ import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 
-export default function BasicImageList(props) {
+export default function PrintImageList(props) {
   const items = props.items;
   return (
-      <ImageList sx={{ width: 400, height: 500 }} cols={1}>
+      <ImageList sx={{ width: 400, height: 600 }}>
       {items.map((item) => (
         <ImageListItem key={item}>
           <img

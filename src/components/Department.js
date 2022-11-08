@@ -5,7 +5,7 @@ import React from "react";
 class Department extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { item: props.item, readOnly: true, url: "/leader/" + props.item.name };
+        this.state = { item: props.item, readOnly: true, url: "/leader/" + props.item.name + "/" + new Date().getFullYear() };
         this.delete = props.delete;
         this.update = props.update;
     }
