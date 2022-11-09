@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Admin from './pages/Admin';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
@@ -8,19 +8,13 @@ import User from "./pages/User";
 import Leader from "./pages/Leader";
 import AccessDenied from './pages/AccessDenied';
 import UserUpdate from './pages/UserUpdate';
-import { AppBar, Avatar, Badge, Box, Button, createTheme, CssBaseline, Divider, IconButton, List, ThemeProvider, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, createTheme, CssBaseline, IconButton, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import styled from '@emotion/styled';
-import MuiAppBar from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
 import { logout } from './service/ApiService';
-import { mainListItems, secondaryListItems } from './components/Dashboard/listItems';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
-import ReceiptsPage from './components/SimpleComponent';
-import { deepOrange } from '@mui/material/colors';
 import { AccountCircleRounded } from '@mui/icons-material';
 
 function Copyright(props) {
@@ -34,24 +28,6 @@ function Copyright(props) {
 }
 
 const drawerWidth = 240;
-
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, open }) => ({
-//   zIndex: theme.zIndex.drawer + 1,
-//   transition: theme.transitions.create(['width', 'margin'], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   ...(open && {
-//     marginLeft: drawerWidth,
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   }),
-// }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -116,7 +92,6 @@ export default function App() {
               sx={{ flexGrow: 1 }}
             >
               <a href={"/" + new Date().getFullYear()} style={{textDecoration: 'none', color: 'white'}}>HSAP</a>
-              {/* <span>({localStorage.getItem('name')})</span> */}
             </Typography>
             <IconButton color="inherit" onClick={() => {window.location.href = "/user-update"}}>
               <AccountCircleRounded />
@@ -124,26 +99,6 @@ export default function App() {
             <Button onClick={logout} variant='Outlined'>로그아웃</Button>
           </Toolbar>
         </AppBar>
-        {/* <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
-          </List>
-        </Drawer> */}
         <Box
           component="main"
           sx={{
@@ -162,7 +117,6 @@ export default function App() {
               <Route path='/signup' exact component={SignUp} />
               <Route path="/signin" exact component={SignIn} />
               <Route path="/admin" exact component={Admin} />
-              <Route path="/receipt" exact component={ReceiptsPage} />
               <Route path="/leader/:name/:year" exact component={Leader} />
               <Route path="/user/:year" exact component={User} />
               <Route path="/user-update" exact component={UserUpdate} />
