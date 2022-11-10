@@ -71,7 +71,6 @@ export default function FindPW() {
     if (authNumber !== '' && authNumber === messageNumber) {
       setPhoneAuthCheck(true);
       setAuthPhoneNumber(phoneNumber);
-      // alert("휴대폰 인증 완료하였습니다.");
       call("/auth/find-password", "PUT", { email, phoneNumber, name })
       .then(res => {
         alert("휴대폰으로 발송된 임시비밀번호를 이용하여 로그인 해주세요.");
