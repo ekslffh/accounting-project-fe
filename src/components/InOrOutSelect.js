@@ -6,13 +6,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function BasicSelect(props) {
-  const [value, setValue] = React.useState('expenditure');
-
-  React.useEffect(() => {
-    if (props.inOrOut) {
-      setValue(props.inOrOut);
-    }
-  },[])
+  const in_or_out = props.inOrOut;
+  const [value, setValue] = React.useState(in_or_out);
 
   const handleChange = (event) => {
     setValue(event.target.value);

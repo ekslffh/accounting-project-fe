@@ -26,6 +26,7 @@ export default function SignUp() {
     setEmail(event.target.value);
     setDuplicateCheck(false);
   };
+  
   // 아이디 중복 체크 하기
   const onclickDuplicateButton = () => {
     setEmail(email.trim());
@@ -39,6 +40,7 @@ export default function SignUp() {
       });
     }
   }
+
   // 중복검사 되어있으면 V, 아니면 중복검사 버튼 출력
   let checkEmailContent = duplicateCheck 
                           ? 
@@ -112,11 +114,12 @@ export default function SignUp() {
     setMessageNumber(event.target.value);
   }
   const onClickPhoneRequestButton = () => {
+    if (phoneNumber.trim() === '') {
+      alert("전화번호를 입력해 주세요.");
+      return;
+    }
     setSendPhoneRequest(true);
-    // console.log("phoneNumber:", phoneNumber);
     // 서버로 요청보내고 인증번호 4자리값 저장 (이후에 입력한 값과 비교한다)
-    // call("/auth/phone", "POST", {"receiver": phoneNumber})
-    // .then(response => setAuthNumber(response.toString()));
     axios.post(API_BASE_URL + "/auth/phone", {"receiver": phoneNumber})
     .then(res => setAuthNumber(res.data.toString()))
     .catch(err => console.log(err));
@@ -124,16 +127,13 @@ export default function SignUp() {
   const onClickPhoneAuthButton = () => {
     // 실제 인증번호(authNumber)와 메시지로 받아 입력한 값(messageNumber)를 비교한다
     if (authNumber !== '' && authNumber === messageNumber) {
-      setPhoneAuthCheck(true);
-      setAuthPhoneNumber(phoneNumber);
-      alert("휴대폰 인증 완료하였습니다.");
+        setPhoneAuthCheck(true);
+        setAuthPhoneNumber(phoneNumber);
+        alert("휴대폰 인증 완료하였습니다.");
     }
     else {
-      setMessageNumber('');
-      // console.log("같은지", authNumber === messageNumber)
-      // console.log("타입", typeof(authNumber));
-      // console.log("타입2", typeof(messageNumber));
-      alert("휴대폰 인증 실패하였습니다.")
+        setMessageNumber('');
+        alert("휴대폰 인증 실패하였습니다.")
     }
     setSendPhoneRequest(false);
   }

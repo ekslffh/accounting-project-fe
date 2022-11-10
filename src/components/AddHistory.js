@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select, styled } from '@mui/material';
 import Calendar from './Calendar';
-import BasicSelect from './BasicSelect';
+import BasicSelect from './InOrOutSelect';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -35,8 +35,6 @@ export default function AddHistory(props) {
 
   const handleFileChange = event => {
     props.setReceipt(event.target.files);
-    // if (!props.receipt) return;
-    // event.target.value = null;
   }
 
   const handleCategoryChange = (event) => {
@@ -47,6 +45,12 @@ export default function AddHistory(props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+    if (dateTime === '') return alert("날짜 및 시간을 입력해주세요.");
+    else if (category.id === '') return alert("카테고리를 선택해주세요.");
+    else if (amount.trim() === '') return alert("금액을 입력해 주세요.");
+    else if (isNaN(amount)) return alert("금액에 숫자만 입력해주세요.");
+    else if (amount < 0) return alert("금액에 음의 값을 넣을 수 없습니다.");
+
     var inputData = {
       useDate: dateTime, 
       memo: data.get('memo'),
@@ -55,12 +59,12 @@ export default function AddHistory(props) {
 
     if (expenditure) {
       // 지출일 경우
-      inputData.expenditure = parseInt(data.get('amount'));
+      inputData.expenditure = parseInt(amount);
       inputData.income = 0;
     } 
     else {
       // 수입일 경우
-      inputData.income = parseInt(data.get('amount'));
+      inputData.income = parseInt(amount);
       inputData.expenditure = 0;
     }
     props.add(inputData);
@@ -117,10 +121,10 @@ export default function AddHistory(props) {
                   </Select>
               </FormControl>
               </Grid>
-              <Grid item xs={3}>
-                <BasicSelect setExpenditure={setExpenditure} />
+              <Grid item xs={4}>
+                <BasicSelect inOrOut='expenditure' setExpenditure={setExpenditure} />
               </Grid>
-              <Grid item xs={7}>
+              <Grid item xs={6}>
                 <TextField
                   required
                   fullWidth

@@ -1,7 +1,7 @@
-import { Box, Button, Container, Grid, } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import React from "react";
 import ReactToPrint from "react-to-print";
-import ReceiptsBoard from "../components/ReceiptsBoard";
+import ReceiptsBoard from "./ReceiptsBoard";
 import "../Receipts.css"
 
 function chunk(data, size) {
@@ -28,9 +28,7 @@ function ReceiptsList(props) {
                       <br/>
                       {imageList.map((image, idx) => {
                         return (
-                          <>
                             <img className="imageblock" width="315" height="490" src={image} alt="영수증" key={idx}/>
-                          </>
                         )})}
                       <div className="pagebreak" key={listIndex}></div>
                     </div>
@@ -44,13 +42,13 @@ function ReceiptsList(props) {
 export default function PrintReceipts(props) {
   const componentRef = React.useRef(null);
   return (
-    <span>
+    <>
       <ReactToPrint 
         documentTitle="HSAP"
         trigger={() => <Button>프린트</Button>}
         content={() => componentRef.current}
       />
       <ReceiptsList printRef={componentRef} items={props.items} />
-    </span>
+    </>
   );
 };

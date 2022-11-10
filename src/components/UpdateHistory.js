@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select, styled, Switch } from '@mui/material';
 import Calendar from './Calendar';
-import BasicSelect from './BasicSelect';
+import BasicSelect from './InOrOutSelect';
 
 const theme = createTheme();
 
@@ -33,13 +33,12 @@ const DeleteButton = styled('div')(({ theme }) => ({
 
 export default function UpdateHistory(props) {
   const item = props.item;
-
   const [dateTime, setDateTime] = React.useState(item.useDate);
   const [category, setCategory] = React.useState({id: item.category.id});
   const [expenditure, setExpenditure] = React.useState(item.expenditure !== 0);
 
-  const [amount, setAmount] = React.useState(0)
-  const [inOurOut, setInOrOut] = React.useState('')
+  const [amount, setAmount] = React.useState((item.income === 0) ? item.expenditure : item.income);
+  const [inOrOut, setInOrOut] = React.useState((item.income === 0) ? 'expenditure' : 'income');
   const categories = props.categories;
   const [memo, setMemo] = React.useState(item.memo);
   const handleChange = (event) => {
@@ -51,19 +50,6 @@ export default function UpdateHistory(props) {
   const handleFileChange = event => {
     props.setReceipt(event.target.files);
   }
-
-  React.useEffect(() => {
-    if (item.income === 0) {
-      // 지출
-      setAmount(item.expenditure);
-      setInOrOut('expenditure');
-    }
-    else {
-      // 수입
-      setAmount(item.income);
-      setInOrOut('income');
-    }
-  },[]);
 
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
@@ -81,6 +67,10 @@ export default function UpdateHistory(props) {
       memo: data.get('memo'),
       category: category
     };
+    if (data.get('amount') === '') return alert("금액을 입력해주세요.");
+    else if (isNaN(data.get('amount'))) return alert("금액에 숫자만 입력가능합니다.");
+    else if (data.get('amount') < 0) return alert("금액에 음의 값을 넣을 수 없습니다.");
+    
     if (expenditure) {
       // console.log('지출')
       inputData.expenditure = parseInt(data.get('amount'));
@@ -149,7 +139,7 @@ export default function UpdateHistory(props) {
              ?
              <>
                <Grid item xs={3}>
-                <BasicSelect inOrOut={inOurOut} setExpenditure={setExpenditure}/>
+                <BasicSelect inOrOut={inOrOut} setExpenditure={setExpenditure}/>
               </Grid>
               <Grid item xs={5}>
                 <TextField
@@ -182,10 +172,10 @@ export default function UpdateHistory(props) {
              </> 
              :
              <>
-               <Grid item xs={3}>
-                <BasicSelect inOrOut={inOurOut} setExpenditure={setExpenditure}/>
+               <Grid item xs={4}>
+                <BasicSelect inOrOut={inOrOut} setExpenditure={setExpenditure}/>
               </Grid>
-              <Grid item xs={7}>
+              <Grid item xs={6}>
                 <TextField
                   required
                   fullWidth

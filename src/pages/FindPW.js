@@ -23,6 +23,11 @@ export default function FindPW() {
     setEmail(event.target.value);
   };
 
+  const [name, setName] = React.useState('');
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  }
+
   // 전화번호 입력 및 인증번호 받아 입력하기
   const [phoneNumber, setPhoneNumber] = React.useState('');
   // 인증요청 보냈는지 상태값 저장
@@ -51,6 +56,9 @@ export default function FindPW() {
   }
 
   const onClickPhoneRequestButton = () => {
+    if (email.trim() === '') return alert("이메일을 입력해주세요.");
+    else if (name.trim() === '') return alert("이름을 입력해주세요.");
+    else if (phoneNumber.trim() === '') return alert("전화번호를 입력해주세요.");
     setSendPhoneRequest(true);
     // 서버로 요청보내고 인증번호 4자리값 저장 (이후에 입력한 값과 비교한다)
     axios.post(API_BASE_URL + "/auth/phone", {"receiver": phoneNumber})
@@ -64,13 +72,14 @@ export default function FindPW() {
       setPhoneAuthCheck(true);
       setAuthPhoneNumber(phoneNumber);
       // alert("휴대폰 인증 완료하였습니다.");
-      call("/auth/find-password", "PUT", { email, phoneNumber })
+      call("/auth/find-password", "PUT", { email, phoneNumber, name })
       .then(res => {
-        alert("휴대폰으로 발송된 임시비밀번호를 이용하여 로그인 해주세요.")
-        window.location.href="/signin"
+        alert("휴대폰으로 발송된 임시비밀번호를 이용하여 로그인 해주세요.");
+        window.location.href="/signin";
       })
       .catch(res => {
-        console.log(res.error)
+        alert(res.error);
+        console.log(res.error);
       });
     }
     else {
@@ -137,6 +146,8 @@ export default function FindPW() {
                   required
                   fullWidth
                   id="name"
+                  value={name}
+                  onChange={handleNameChange}
                   label="이름"
                 />
               </Grid>
@@ -167,7 +178,7 @@ export default function FindPW() {
             </>
           :
           <Typography component="h1" variant="h5">
-            비밀번호 변경완료
+            휴대폰 인증완료
           </Typography>
           }
         </Box>
