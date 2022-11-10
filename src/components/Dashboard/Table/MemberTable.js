@@ -5,7 +5,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import BasicModal from '../../BasicModal';
 import DeletedMemberTable from './DeletedMemberTable';
@@ -44,10 +44,11 @@ export default function Orders_member(props) {
   return (
     <React.Fragment>
       <Title>멤버관리</Title>
+      <Typography variant='h3'>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>이메일</TableCell>
+            <TableCell><div>이메일</div></TableCell>
             <TableCell>이름</TableCell>
             <TableCell>전화번호</TableCell>
             <TableCell>생년월일</TableCell>
@@ -80,7 +81,7 @@ export default function Orders_member(props) {
                 <TableCell>{row.birth}</TableCell>
                 <TableCell>{parseDate(row.createdAt)}</TableCell>
                 <TableCell>멤버</TableCell>
-                <TableCell>    
+                <TableCell align='right'>    
                   <Button size='small' color='error' onClick={() => {onClickDeleteButton(row.email)}}>삭제</Button>
                 </TableCell>
               </TableRow>
@@ -88,6 +89,7 @@ export default function Orders_member(props) {
            )}
         </TableBody>
       </Table>
+      </Typography>
     </React.Fragment>
   );
 }

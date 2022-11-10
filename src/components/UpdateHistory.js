@@ -117,10 +117,10 @@ export default function UpdateHistory(props) {
               spacing={2}
               alignItems="center"
             >
-              <Grid item xs={5}>
+              <Grid item xs={12} md={5}>
                   <Calendar fullWidth dateTime={dateTime} setDateTime={setDateTime}/>   
               </Grid>
-              <Grid item xs={7}>
+              <Grid item xs={12} md={7}>
               <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">카테고리</InputLabel>
                   <Select
@@ -138,10 +138,10 @@ export default function UpdateHistory(props) {
              isHaveImage 
              ?
              <>
-               <Grid item xs={3}>
+               <Grid item xs={12} md={3}>
                 <BasicSelect inOrOut={inOrOut} setExpenditure={setExpenditure}/>
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={12} md={5}>
                 <TextField
                   required
                   fullWidth
@@ -153,7 +153,7 @@ export default function UpdateHistory(props) {
                   onChange={handleAmountChange}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6} md={2}>
                 <label htmlFor="files">
                   <UpdateButton>영수증수정</UpdateButton>
                 </label>
@@ -166,16 +166,16 @@ export default function UpdateHistory(props) {
                   ref={fileInput}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={6} md={2}>
                 <DeleteButton onClick={onClickDeleteReceiptButton}>영수증삭제</DeleteButton>
               </Grid>
              </> 
              :
              <>
-               <Grid item xs={4}>
+               <Grid item xs={12} md={4}>
                 <BasicSelect inOrOut={inOrOut} setExpenditure={setExpenditure}/>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   required
                   fullWidth
@@ -187,7 +187,7 @@ export default function UpdateHistory(props) {
                   onChange={handleAmountChange}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={12} md={2}>
                 <label htmlFor="files">
                   <UpdateButton>영수증등록</UpdateButton>
                 </label>

@@ -104,10 +104,10 @@ export default function AddHistory(props) {
               direction="row"
               alignItems="center"
               >
-              <Grid item xs={5}>
+              <Grid item xs={12} md={5}>
                   <Calendar fullWidth dateTime={dateTime} setDateTime={setDateTime}/>   
               </Grid>
-              <Grid item xs={7}>
+              <Grid item xs={12} md={7}>
               <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">카테고리</InputLabel>
                   <Select
@@ -121,10 +121,10 @@ export default function AddHistory(props) {
                   </Select>
               </FormControl>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} md={4}>
                 <BasicSelect inOrOut='expenditure' setExpenditure={setExpenditure} />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   required
                   fullWidth
@@ -136,9 +136,9 @@ export default function AddHistory(props) {
                   onChange={handleAmountChange}
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={12} md={2}>
                 <label htmlFor="files">
-                 <Div>영수증등록</Div>
+                  <Div style={{align: 'center'}}>영수증등록</Div>
                 </label>
                 <input 
                   type="file" 

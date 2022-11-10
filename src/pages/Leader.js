@@ -10,6 +10,7 @@ import { call, isCorrectQuarter } from '../service/ApiService';
 import LeaderHistoryTable from '../components/Dashboard/Table/LeaderHistoryTable';
 import { API_BASE_URL } from '../config/app-config';
 import axios from 'axios';
+import "../style/Main.css"
 
 export default function Leader(props) {
   const [department, ] = React.useState({ name: props.match.params.name });
@@ -219,7 +220,7 @@ export default function Leader(props) {
                 </Paper>
               </Grid>
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%',overflow: 'auto' }}>
                   <LeaderHistoryTable histories={filteredHistories} add={addHistory} setReceipt={setReceipt} deleteReceipt={deleteReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
                 </Paper>
               </Grid>
@@ -229,7 +230,7 @@ export default function Leader(props) {
                 </Paper>
               </Grid>
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%',overflow: 'auto' }}>
                   <MemberTable members={members} delete={deleteMember} />
                 </Paper>
               </Grid>

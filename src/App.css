@@ -1,3 +1,9 @@
+* {
+  /* font-size: 1.0em; */
+  text-decoration: none;
+  word-break: keep-all;
+}
+
 .App {
   text-align: center;
 }

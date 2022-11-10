@@ -21,7 +21,6 @@ export default function DeletedCategoryTable(props) {
   const getDeletedCategories = (name) => {
     call("/category/deleted?name=" + name, "GET", null) 
     .then(res => {
-      console.log(res.data);
       setCategories(res.data);
     })
     .catch(res => console.log(res.error));

@@ -10,17 +10,16 @@ import AccessDenied from './pages/AccessDenied';
 import UserUpdate from './pages/UserUpdate';
 import { AppBar, Box, Button, createTheme, CssBaseline, Grid, IconButton, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import { logout } from './service/ApiService';
-import MenuIcon from '@mui/icons-material/Menu';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import { AccountCircleRounded } from '@mui/icons-material';
-import { green, purple } from '@mui/material/colors';
+import { green, purple, red } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
-    // primary: {
-    //   main: '#42a5f5',
-    // },
+    primary: {
+      main: '#42a5f5',
+    },
     secondary: {
       main: '#f44336',
     },
