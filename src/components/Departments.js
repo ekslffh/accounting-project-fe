@@ -17,7 +17,9 @@ class Departments extends React.Component {
        })
     }
     add = (item, email) => {
-        call("/department?email=" + email, "POST", item)
+        if (item.name.trim() === '') return alert("부서 이름을 입력해주세요.");
+        else if (email.trim() === '') return alert("부서장 아이디를 입력해주세요.");
+        call("/department?email=" + email.trim(), "POST", item)
         .then(response => {
             this.setState({ items: response.data });
             alert("부서가 추가되었습니다");

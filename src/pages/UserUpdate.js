@@ -27,11 +27,11 @@ export default function UserUpdate() {
   }
 
   // 부서 선택
-  const [department, setDepartment] = React.useState({ name: '' });
-  const [departments, setDepartments] = React.useState([]);
-  const handleDepartmentChange = (event) => {
-    setDepartment({name: event.target.value});
-  };
+  const [department, ] = React.useState({ name: '' });
+  // const [departments, setDepartments] = React.useState([]);
+  // const handleDepartmentChange = (event) => {
+  //   setDepartment({name: event.target.value});
+  // };
 
   // 태어난 연도 선택
   const [year, setYear] = React.useState('')
@@ -74,6 +74,9 @@ export default function UserUpdate() {
     const data = new FormData(event.currentTarget);
     const birth = parseDate(year, month, day);
 
+    if (data.get('name').trim() === '') return alert("이름을 입력해주세요.");
+    else if (year === '' || month === '' || day === '') return alert("생년월일을 입력해주세요.")
+
     const senderMember = {
         id: member.id,
         email: data.get('email'),
@@ -102,6 +105,7 @@ export default function UserUpdate() {
   }, []);
 
   const onClickAuthPhone = () => {
+    if (phoneNumber === '') return alert("전화번호를 입력해주세요.")
     setPhoneRequest(true);
     axios.post(API_BASE_URL + "/auth/phone", {"receiver": phoneNumber})
     .then(res => setAuthNumber(res.data.toString()))
@@ -115,11 +119,7 @@ export default function UserUpdate() {
   const [isPhoneAuth, setIsPhoneAuth] = React.useState(false);
 
   const onClickPhoneRequest = () => {
-    // console.log("실제 인증번호: ", authNumber);
-    // console.log("입력 인증번호: ", messageNumber);
-    // console.log("실제 인증번호 타입: ", typeof(authNumber));
-    // console.log("입력 인증번호 타입: ", typeof(messageNumber));
-    if (authNumber === messageNumber) {
+    if (authNumber !== '' && authNumber === messageNumber) {
       setIsPhoneAuth(true);
       alert("휴대폰 인증 완료하였습니다.");
       setPhoneRequest(false);
@@ -172,7 +172,6 @@ export default function UserUpdate() {
               container 
               spacing={2} 
               direction="row"
-             //  justifyContent="center"
               alignItems="center"
             >
               <Grid item xs={12}>
@@ -194,7 +193,6 @@ export default function UserUpdate() {
                   id="name"
                   onChange={handleNameChange}
                   value={member !== undefined && name}
-                  // defaultValue={member !== undefined && member.name}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>

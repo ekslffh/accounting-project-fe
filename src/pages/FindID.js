@@ -45,14 +45,15 @@ export default function FindID() {
       }
       setPhoneNumber(event.target.value);
   }
+
   const handleMessage = (event) => {
     setMessageNumber(event.target.value);
   }
+
   const onClickPhoneRequestButton = () => {
+    if (name.trim() === '') return alert("이름을 입력해주세요.");
+    else if (phoneNumber.trim() === '') return alert("전화번호를 입력해주세요.");
     setSendPhoneRequest(true);
-    // 서버로 요청보내고 인증번호 4자리값 저장 (이후에 입력한 값과 비교한다)
-    // call("/auth/phone", "POST", {"receiver": phoneNumber})
-    // .then(response => setAuthNumber(response.toString()));
     axios.post(API_BASE_URL + "/auth/phone", {"receiver": phoneNumber})
     .then(res => setAuthNumber(res.data.toString()))
     .catch(err => console.log(err));
@@ -64,7 +65,7 @@ export default function FindID() {
       setPhoneAuthCheck(true);
       setAuthPhoneNumber(phoneNumber);
       alert("휴대폰 인증 완료하였습니다.");
-      call("/auth/find-id", "PUT", { name, phoneNumber})
+      call("/auth/find-id", "PUT", { name: name.trim(), phoneNumber: phoneNumber.trim()})
       .then(res => {
         setEmialList(res.data);
       })

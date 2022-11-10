@@ -19,35 +19,37 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const handleSubmit = (event) => {
+  const login = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    signIn({
-      email: data.get('email').trim(),
-      password: data.get('password').trim(),
-    });
+    const email = data.get('email').trim();
+    const password = data.get('password').trim();
+    if (email === '') alert("이메일을 입력해주세요.");
+    else if (password === '') alert("비밀번호를 입력해주세요.");
+    else signIn({ email, password});
   };
 
-  const onClickDashBoard = () => {
+  const goToDashBoard = () => {
     window.location.href = "/" + new Date().getFullYear();
   }
 
-  // 로그인, 비로그인 상태 구분해서 내용 출력하기
+  // 로그인, 비로그인 상태 구분해서 내용 출력하기 (기준: jwt-token)
   let contents = (localStorage.getItem("token") === null) 
                 ?
-               <Box
+               // 비로그인 상태
+              <Box
                   sx={{
                     marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                   }}
-               >
+              >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}><LockOutlined /></Avatar>
                 <Typography component="h1" variant="h5">
                   로그인
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
                   <TextField
                     margin="normal"
                     required
@@ -79,9 +81,6 @@ export default function SignIn() {
                       <BasicModal name="아이디"><FindID /></BasicModal>
                       <span>  </span>
                       <BasicModal name="비밀번호찾기"><FindPW /></BasicModal>
-                      {/* <Link href="#" variant="body2">
-                        비밀번호 찾기
-                      </Link> */}
                     </Grid>
                     <Grid item>
                       <Link href="/signup" variant="body2">
@@ -92,6 +91,7 @@ export default function SignIn() {
                 </Box>
               </Box>
               :
+              // 로그인 상태
               <Box
                 sx={{
                   marginTop: 8,
@@ -104,18 +104,17 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                   {localStorage.getItem("name")}
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
                   <Button
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                    onClick = {onClickDashBoard}
+                    onClick = {goToDashBoard}
                   >
                     대쉬보드 이동
                   </Button>
                 </Box>
               </Box>
- 
 
   return (
     <ThemeProvider theme={theme}>

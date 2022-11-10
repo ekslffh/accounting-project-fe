@@ -17,7 +17,12 @@ export default function ChangeYear() {
     const data = new FormData(event.currentTarget);
     const year = data.get('year');
     if (isNaN(year)) alert("숫자만 입력가능합니다.");
-    else window.location.href = "/" + data.get('year')
+    else {
+      const prevPath = window.location.pathname;
+      const basePath = prevPath.slice(0,prevPath.lastIndexOf('/') + 1);
+      const curPath = basePath + year;
+      window.location.href = curPath;
+    }
   };
 
   return (

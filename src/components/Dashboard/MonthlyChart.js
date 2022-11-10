@@ -14,7 +14,7 @@ function createData(time, amount) {
  */
 export default function Chart(props) {
   const theme = useTheme();
-
+  
   // histories를 넘겨 받아서 월별 지출 합 구하기
   const histories = props.histories;
   function getMonth(useDate) {

@@ -8,14 +8,27 @@ import User from "./pages/User";
 import Leader from "./pages/Leader";
 import AccessDenied from './pages/AccessDenied';
 import UserUpdate from './pages/UserUpdate';
-import { AppBar, Box, Button, createTheme, CssBaseline, IconButton, ThemeProvider, Toolbar, Typography } from '@mui/material';
-import styled from '@emotion/styled';
-import MuiDrawer from '@mui/material/Drawer';
+import { AppBar, Box, Button, createTheme, CssBaseline, Grid, IconButton, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import { logout } from './service/ApiService';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import { AccountCircleRounded } from '@mui/icons-material';
+import { green, purple } from '@mui/material/colors';
+
+const theme = createTheme({
+  palette: {
+    // primary: {
+    //   main: '#42a5f5',
+    // },
+    secondary: {
+      main: '#f44336',
+    },
+    hyesung: {
+      main: green[500],
+    }
+  },
+});
 
 function Copyright(props) {
   return (
@@ -27,64 +40,21 @@ function Copyright(props) {
   );
 }
 
-const drawerWidth = 240;
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
-
-const mdTheme = createTheme();
-
 export default function App() {
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+
     return (
-      <ThemeProvider theme={mdTheme}>
+      <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute">
+        <AppBar position="absolute" color='primary'>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
             }}
           >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
+            <Grid container>
+              <Grid item xs={6}>
+              <Typography
               component="h1"
               variant="h6"
               color="inherit"
@@ -93,10 +63,16 @@ export default function App() {
             >
               <a href={"/" + new Date().getFullYear()} style={{textDecoration: 'none', color: 'white'}}>HSAP</a>
             </Typography>
-            <IconButton color="inherit" onClick={() => {window.location.href = "/user-update"}}>
+              </Grid>
+              <Grid item xs={6} textAlign='right'>
+              <IconButton color="inherit" onClick={() => {window.location.href = "/user-update"}}>
               <AccountCircleRounded />
             </IconButton>
             <Button onClick={logout} variant='Outlined'>로그아웃</Button>
+              </Grid>
+            </Grid>
+           
+          
           </Toolbar>
         </AppBar>
         <Box

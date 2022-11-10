@@ -14,7 +14,7 @@ import CsvData from '../CsvData';
 import { ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
 import ChangeYear from '../../ChangeYear';
-import PrintReceipts from '../../../pages/PrintReceipts';
+import PrintReceipts from '../../PrintReceipts';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({

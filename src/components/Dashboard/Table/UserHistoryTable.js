@@ -14,6 +14,7 @@ import CsvData from '../CsvData';
 import { ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
 import ChangeYear from '../../ChangeYear';
+import PrintReceipts from '../../PrintReceipts';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -55,6 +56,7 @@ export default function UserHistoryTable(props) {
   // 수입, 지출 별 합 구하기
   const totalIncome = rows.map(row => row.income).reduce((prev, cur) => prev + cur, 0);
   const totalExpenditure = rows.map(row => row.expenditure).reduce((prev, cur) => prev + cur, 0);
+  const imagePath = rows.map(row => row.imagePath).reduce((prev, cur) => prev.concat(cur), []);
 
    // 사용일 기준 오름차순
    rows.sort(function(a, b) {
@@ -180,7 +182,10 @@ export default function UserHistoryTable(props) {
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <TableCell align='right'><BasicModal name="연도변경"><ChangeYear /></BasicModal></TableCell>
+            <TableCell align='right'>
+              <PrintReceipts items={imagePath}/>
+              <BasicModal name="연도변경"><ChangeYear /></BasicModal>
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

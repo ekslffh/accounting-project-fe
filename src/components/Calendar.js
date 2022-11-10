@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs from 'dayjs';
 
 export default function Calendar(props) {
 
@@ -17,6 +18,8 @@ export default function Calendar(props) {
             value={props.dateTime}
             onChange={handleChange}
             renderInput={(params) => <TextField {...params} />}
+            minDate={dayjs('2017-01-01')}
+            disableFuture
           />
     </LocalizationProvider>
   );
