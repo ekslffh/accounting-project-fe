@@ -20,6 +20,7 @@ const UpdateButton = styled('div')(({ theme }) => ({
   borderRadius: '4px',
   cursor: 'pointer',
   padding: theme.spacing(1),
+  textAlign: 'center'
 }));
 
 const DeleteButton = styled('div')(({ theme }) => ({
@@ -29,6 +30,7 @@ const DeleteButton = styled('div')(({ theme }) => ({
   borderRadius: '4px',
   cursor: 'pointer',
   padding: theme.spacing(1),
+  textAlign: 'center'
 }));
 
 export default function UpdateHistory(props) {

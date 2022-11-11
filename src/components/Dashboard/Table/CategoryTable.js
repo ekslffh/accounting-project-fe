@@ -10,6 +10,7 @@ import BasicModal from '../../BasicModal';
 import AddCategory from '../../AddCategory';
 import UpdateCategory from '../../UpdateCategory';
 import DeletedCategoryTable from './DeletedCategoryTable';
+import { Add } from '@mui/icons-material';
 
 /**
  * 
@@ -34,8 +35,8 @@ export default function Orders_category(props) {
             <TableCell>이름</TableCell>
             <TableCell>설명</TableCell>
             <TableCell align="right">
-              <BasicModal name="추가"><AddCategory add={props.add} /></BasicModal>
-              <BasicModal name="복구"><DeletedCategoryTable /></BasicModal>
+              <BasicModal name={<Add />}><AddCategory add={props.add} /></BasicModal>
+              <BasicModal variant="outlined" name="복구"><DeletedCategoryTable /></BasicModal>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -45,8 +46,8 @@ export default function Orders_category(props) {
               <TableCell>{row.title}</TableCell>
               <TableCell>{row.description}</TableCell>
               <TableCell align="right">
-                <BasicModal name="수정" color="warning"><UpdateCategory update={props.update} item={row}/></BasicModal>
-                <Button size='small' color='error' onClick={() => {onClickDeleteButton(row.id)}}>삭제</Button>
+                <BasicModal variant="outlined" name="수정" color="warning"><UpdateCategory update={props.update} item={row}/></BasicModal>
+                <Button size='small' variant='outlined' color='error' onClick={() => {onClickDeleteButton(row.id)}}>삭제</Button>
               </TableCell>
             </TableRow>
           ))}

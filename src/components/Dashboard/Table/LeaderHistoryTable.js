@@ -11,11 +11,10 @@ import AddHistory from '../../AddHistory';
 import UpdateHistory from '../../UpdateHistory';
 import styled from '@emotion/styled';
 import CsvData from '../CsvData';
-import { ReceiptLong } from '@mui/icons-material';
+import { Add, ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
 import ChangeYear from '../../ChangeYear';
 import PrintReceipts from '../../PrintReceipts';
-
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -167,12 +166,10 @@ export default function LeaderHistoryTable(props) {
             <TableCell>작성자</TableCell>
             <TableCell>영수증</TableCell>
             <TableCell align="right">
-              <BasicModal name="추가">
+              <BasicModal name={<Add />}>
                 <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} initializeSearch={initializeSearch} />
               </BasicModal>
-              <Button>
-                <CsvData data={rows}/>
-              </Button>
+                <Button><CsvData data={rows}/></Button>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -192,8 +189,8 @@ export default function LeaderHistoryTable(props) {
                 <BasicModal name={<ReceiptLong />}><BasicImageList items={row.imagePath} /></BasicModal>}
               </TableCell>
               <TableCell align="right">
-                <BasicModal name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
-                <Button size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
+                <BasicModal variant="outlined" name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
+                <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
               </TableCell>
             </TableRow>
           ))}
@@ -208,7 +205,7 @@ export default function LeaderHistoryTable(props) {
             <StyledTableCell></StyledTableCell>
             <TableCell align='right'>
               <PrintReceipts items={imagePath}/>
-              <BasicModal name="연도변경"><ChangeYear /></BasicModal>
+              <BasicModal color="modalButton" name="연도변경"><ChangeYear /></BasicModal>
             </TableCell>
           </TableRow>
         </TableBody>

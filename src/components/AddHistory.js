@@ -138,7 +138,7 @@ export default function AddHistory(props) {
               </Grid>
               <Grid item xs={12} md={2}>
                 <label htmlFor="files">
-                  <Div style={{align: 'center'}}>영수증등록</Div>
+                  <Div style={{textAlign: 'center'}}>영수증등록</Div>
                 </label>
                 <input 
                   type="file" 

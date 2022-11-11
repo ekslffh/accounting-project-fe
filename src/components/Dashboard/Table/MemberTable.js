@@ -54,7 +54,7 @@ export default function Orders_member(props) {
             <TableCell>생년월일</TableCell>
             <TableCell>가입일</TableCell>
             <TableCell>직급</TableCell>
-            <TableCell align='right'><BasicModal name="복구"><DeletedMemberTable /></BasicModal></TableCell>
+            <TableCell align='right'><BasicModal variant="outlined" name="복구"><DeletedMemberTable /></BasicModal></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -82,7 +82,7 @@ export default function Orders_member(props) {
                 <TableCell>{parseDate(row.createdAt)}</TableCell>
                 <TableCell>멤버</TableCell>
                 <TableCell align='right'>    
-                  <Button size='small' color='error' onClick={() => {onClickDeleteButton(row.email)}}>삭제</Button>
+                  <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row.email)}}>삭제</Button>
                 </TableCell>
               </TableRow>
             )

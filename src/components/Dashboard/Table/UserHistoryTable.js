@@ -11,10 +11,12 @@ import AddHistory from '../../AddHistory';
 import UpdateHistory from '../../UpdateHistory';
 import styled from '@emotion/styled';
 import CsvData from '../CsvData';
-import { ReceiptLong } from '@mui/icons-material';
+import { Add, DeleteForever, ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
 import ChangeYear from '../../ChangeYear';
 import PrintReceipts from '../../PrintReceipts';
+import EditIcon from '@mui/icons-material/Edit';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -72,12 +74,13 @@ export default function UserHistoryTable(props) {
   }
 
   function parseDate(date) {
-    const year =  date.substr(0, 4);
+    const year =  date.substr(2,2);
     const month = (date.charAt(5) !== '0') ? date.substr(5, 2) : date.substr(6, 1);
-    const day = (date.charAt(8) !== '0') ? date.substr(8,2) : date.substr(9,1);
+    // const day = (date.charAt(8) !== '0') ? date.substr(8,2) : date.substr(9,1);
+    const day = date.substr(8,2);
     const hour = date.substr(11,2);
     const minute = date.substr(14,2);
-    return `${year}년 ${month}월 ${day}일 ${hour}:${minute}`;
+    return `${year}${month}${day}`;
   }
 
   // 수입이면 더하고 지출이면 빼서 잔액 구하기
@@ -93,8 +96,13 @@ export default function UserHistoryTable(props) {
 
   return (
     <React.Fragment>
-      <Grid container spacing={1}>
-        <Grid item xs={4}>
+      <Grid 
+        container 
+        // spacing={1} 
+        direction="row"
+        alignItems="center"
+      >
+        <Grid item xs={3}>
         <Title>사용현황</Title>
         </Grid>
         <Grid item xs={4}>
@@ -112,7 +120,7 @@ export default function UserHistoryTable(props) {
           </Select>
         </FormControl>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3.5}>
               <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">분기</InputLabel>
         <Select
@@ -130,6 +138,11 @@ export default function UserHistoryTable(props) {
         </Select>
       </FormControl>
         </Grid>
+        <Grid item xs={1.5}>
+          <BasicModal name={<Add/>}>
+            <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} initializeSearch={initializeSearch} />
+          </BasicModal>
+        </Grid>
       </Grid>
       <Table size="small">
         <TableHead>
@@ -140,15 +153,9 @@ export default function UserHistoryTable(props) {
             <TableCell>지출</TableCell>
             <TableCell>잔액</TableCell>
             <TableCell>비고</TableCell>
-            <TableCell>작성자</TableCell>
             <TableCell>영수증</TableCell>
-            <TableCell align="right">
-              <BasicModal name="추가">
-                <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} initializeSearch={initializeSearch} />
-              </BasicModal>
-              <Button>
-                <CsvData data={rows}/>
-              </Button>
+            <TableCell>
+              <BasicModal name="연도변경" color='modalButton'><ChangeYear /></BasicModal>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -161,15 +168,14 @@ export default function UserHistoryTable(props) {
               <TableCell>{row.expenditure}</TableCell>
               <TableCell>{calcMoney(row.income, row.expenditure)}</TableCell>
               <TableCell>{row.memo}</TableCell>
-              <TableCell>{row.member.name}</TableCell>
               <TableCell>
                 {(row.imagePath.length !== 0) 
                 && 
                 <BasicModal name={<ReceiptLong />}><BasicImageList items={row.imagePath} /></BasicModal>}
               </TableCell>
-              <TableCell align="right">
-                <BasicModal name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
-                <Button size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
+              <TableCell>
+                <BasicModal variant="outlined" name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
+                <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
               </TableCell>
             </TableRow>
           ))}
@@ -182,9 +188,7 @@ export default function UserHistoryTable(props) {
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <TableCell align='right'>
-              <PrintReceipts items={imagePath}/>
-              <BasicModal name="연도변경"><ChangeYear /></BasicModal>
+            <TableCell>
             </TableCell>
           </TableRow>
         </TableBody>

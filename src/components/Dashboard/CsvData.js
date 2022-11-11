@@ -1,4 +1,7 @@
 import { CSVLink } from "react-csv";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { Button } from "@mui/material";
+import { DeleteForever } from "@mui/icons-material";
 
 export default function CsvData(props) {
 
@@ -30,5 +33,5 @@ export default function CsvData(props) {
 
       const data = props.data.map(d => createData(d));
 
-    return <CSVLink filename={name} data={data} headers={headers}>다운로드</CSVLink>
+    return <CSVLink filename={name} data={data} headers={headers}>EXCEL</CSVLink>;
 }

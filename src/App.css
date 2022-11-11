@@ -1,7 +1,12 @@
 * {
   /* font-size: 1.0em; */
-  text-decoration: none;
+  /* text-decoration: none; */
   word-break: keep-all;
+}
+
+a {
+  text-decoration: none;
+  color: green
 }
 
 .App {

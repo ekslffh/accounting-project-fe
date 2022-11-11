@@ -45,7 +45,7 @@ export default function PrintReceipts(props) {
     <>
       <ReactToPrint 
         documentTitle="HSAP"
-        trigger={() => <Button>프린트</Button>}
+        trigger={() => <Button color="modalButton">프린트</Button>}
         content={() => componentRef.current}
       />
       <ReceiptsList printRef={componentRef} items={props.items} />

@@ -13,7 +13,7 @@ import { logout } from './service/ApiService';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import { AccountCircleRounded } from '@mui/icons-material';
-import { green, purple, red } from '@mui/material/colors';
+import { green, grey, purple, red } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
@@ -23,9 +23,10 @@ const theme = createTheme({
     secondary: {
       main: '#f44336',
     },
-    hyesung: {
-      main: green[500],
-    }
+    modalButton: {
+      main: grey[400],
+      black: '#000000'
+    },
   },
 });
 
@@ -63,9 +64,10 @@ export default function App() {
               <a href={"/" + new Date().getFullYear()} style={{textDecoration: 'none', color: 'white'}}>HSAP</a>
             </Typography>
               </Grid>
-              <Grid item xs={6} textAlign='right'>
+              <Grid item xs={6} textAlign='right' color={'white'}>
               <IconButton color="inherit" onClick={() => {window.location.href = "/user-update"}}>
-              <AccountCircleRounded />
+                <AccountCircleRounded />
+                <Typography>{localStorage.getItem('name')}</Typography>
             </IconButton>
             <Button onClick={logout} variant='Outlined'>로그아웃</Button>
               </Grid>

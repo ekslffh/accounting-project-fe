@@ -225,7 +225,7 @@ export default function Leader(props) {
                 </Paper>
               </Grid>
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%', overflow: 'auto'  }}>
                   <CategoryTable categories={categories} add={addCategory} delete={deleteCategory} update={updateCategory} />
                 </Paper>
               </Grid>
