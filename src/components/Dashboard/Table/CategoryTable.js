@@ -34,6 +34,7 @@ export default function Orders_category(props) {
           <TableRow>
             <TableCell>이름</TableCell>
             <TableCell>설명</TableCell>
+            <TableCell>금액</TableCell>
             <TableCell align="right">
               <BasicModal name={<Add />}><AddCategory add={props.add} /></BasicModal>
               <BasicModal variant="outlined" name="복구"><DeletedCategoryTable /></BasicModal>
@@ -45,6 +46,7 @@ export default function Orders_category(props) {
             <TableRow key={row.id}>
               <TableCell>{row.title}</TableCell>
               <TableCell>{row.description}</TableCell>
+              <TableCell>{row.amount}</TableCell>
               <TableCell align="right">
                 <BasicModal variant="outlined" name="수정" color="warning"><UpdateCategory update={props.update} item={row}/></BasicModal>
                 <Button size='small' variant='outlined' color='error' onClick={() => {onClickDeleteButton(row.id)}}>삭제</Button>

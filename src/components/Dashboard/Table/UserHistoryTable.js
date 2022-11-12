@@ -188,8 +188,6 @@ export default function UserHistoryTable(props) {
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <TableCell>
-            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

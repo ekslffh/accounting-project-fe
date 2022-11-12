@@ -14,6 +14,7 @@ export default function AddCategory(props) {
 
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [amount, setAmount] = React.useState(0);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -23,12 +24,17 @@ export default function AddCategory(props) {
     setDescription(event.target.value);
   };
 
+  const handleAmountChange = (event) => {
+    setAmount(event.target.value);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     var inputData = {
-        title: data.get('title'),
-        description: data.get('description')
+        title: title.trim(),
+        description: description.trim(),
+        amount
     };
     props.add(inputData);
     setTitle("");
@@ -73,6 +79,17 @@ export default function AddCategory(props) {
                   autoComplete="description"
                   value={description}
                   onChange={handleDescChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  name="amount"
+                  label="금액"
+                  id="amount"
+                  autoComplete="amount"
+                  value={amount}
+                  onChange={handleAmountChange}
                 />
               </Grid>
             </Grid>
