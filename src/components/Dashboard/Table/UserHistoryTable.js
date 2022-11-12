@@ -20,8 +20,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
-    color: theme.palette.common.white,
-    backgroundColor: theme.palette.primary.light,
+    // color: theme.palette.common.white,
+    backgroundColor: '#bbdefb',
   },
 }));
 

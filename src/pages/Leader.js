@@ -167,6 +167,16 @@ export default function Leader(props) {
     .catch(err => console.log(err));
   };
 
+  const changePaymentOrNot = (item) => {
+    call("/history/payment?year=" + year, "PUT", item)
+    .then(res => {
+      setHistories(res.data);
+    })
+    .catch(res => {
+      console.log(res.error);
+    })
+  }
+
   // 카테고리, 분기로 필터링하는 함수
   function filterHistories(search) {
     // 전체 멤버일 때
@@ -221,7 +231,7 @@ export default function Leader(props) {
               </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%',overflow: 'auto' }}>
-                  <LeaderHistoryTable histories={filteredHistories} add={addHistory} setReceipt={setReceipt} deleteReceipt={deleteReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
+                  <LeaderHistoryTable changePaymentOrNot={changePaymentOrNot} histories={filteredHistories} add={addHistory} setReceipt={setReceipt} deleteReceipt={deleteReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
                 </Paper>
               </Grid>
               <Grid item xs={12}>

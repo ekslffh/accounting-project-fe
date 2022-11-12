@@ -11,15 +11,15 @@ import AddHistory from '../../AddHistory';
 import UpdateHistory from '../../UpdateHistory';
 import styled from '@emotion/styled';
 import CsvData from '../CsvData';
-import { Add, ReceiptLong } from '@mui/icons-material';
+import { Add, CheckOutlined, CheckRounded, ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
 import ChangeYear from '../../ChangeYear';
 import PrintReceipts from '../../PrintReceipts';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
-    color: theme.palette.common.white,
-    backgroundColor: theme.palette.primary.light,
+    // color: theme.palette.common.white,
+    backgroundColor: '#bbdefb',
   },
 }));
 
@@ -37,6 +37,7 @@ export default function LeaderHistoryTable(props) {
   // 잔액
   let money = 0;
   const rows = props.histories;
+  console.log("rows: ", rows)
   const categories = props.categories;
   const members = props.members;
 
@@ -59,6 +60,13 @@ export default function LeaderHistoryTable(props) {
     }
     props.delete(item);
     initializeSearch();
+  }
+  const onClickPaymentButton = (row) => {
+    const item = {
+      id: row.id,
+      payment: row.payment
+    }
+    props.changePaymentOrNot(item);
   }
   
   // 수입, 지출 별 합 구하기
@@ -157,6 +165,7 @@ export default function LeaderHistoryTable(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
+            <TableCell>결제여부</TableCell>
             <TableCell>사용일</TableCell>
             <TableCell>적요</TableCell>
             <TableCell>수입</TableCell>
@@ -176,6 +185,7 @@ export default function LeaderHistoryTable(props) {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
+              <TableCell>{row.payment && <CheckRounded color='primary'/>}</TableCell>
               <TableCell>{parseDate(row.useDate)}</TableCell>
               <TableCell>{row.category.title}</TableCell>
               <TableCell>{row.income}</TableCell>
@@ -189,6 +199,11 @@ export default function LeaderHistoryTable(props) {
                 <BasicModal name={<ReceiptLong />}><BasicImageList items={row.imagePath} /></BasicModal>}
               </TableCell>
               <TableCell align="right">
+                {!(row.payment) ?
+                 <Button variant='outlined' size='small' onClick={() => {onClickPaymentButton(row)}}>결제</Button>
+                :
+                <Button variant='outlined' color='error' size='small' onClick={() => {onClickPaymentButton(row)}}>취소</Button>
+                }
                 <BasicModal variant="outlined" name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
                 <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
               </TableCell>
@@ -200,6 +215,7 @@ export default function LeaderHistoryTable(props) {
             <StyledTableCell>{totalIncome}</StyledTableCell>
             <StyledTableCell>{totalExpenditure}</StyledTableCell>
             <StyledTableCell>{money}</StyledTableCell>
+            <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
