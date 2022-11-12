@@ -117,7 +117,7 @@ export default function FindID() {
                direction="row"
                alignItems="center"
             >
-              <Grid item xs={8}>
+              <Grid item xs={10}>
                 <TextField
                   value={name}
                   onChange={handleNameChange}
@@ -128,7 +128,7 @@ export default function FindID() {
                   label="이름"
                 />
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={10}>
                 <TextField
                   fullWidth
                   id="phone-number"
@@ -141,8 +141,8 @@ export default function FindID() {
                   autoComplete="phone-number"
                 />
               </Grid>
-              <Grid item xs={4}>
-                  <Button variant='outlined' onClick={onClickPhoneRequestButton}>인증번호 요청</Button>
+              <Grid item xs={2}>
+                  <Button variant='contained' onClick={onClickPhoneRequestButton}>인증번호 요청</Button>
               </Grid>
               {phoneAuthContent}
             </Grid>
