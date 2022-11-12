@@ -48,6 +48,7 @@ export default function DeletedCategoryTable(props) {
           <TableRow>
             <TableCell>이름</TableCell>
             <TableCell>설명</TableCell>
+            <TableCell>금액</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -56,6 +57,7 @@ export default function DeletedCategoryTable(props) {
             <TableRow key={row.id}>
               <TableCell>{row.title}</TableCell>
               <TableCell>{row.description}</TableCell>
+              <TableCell>{row.amount}</TableCell>
               <TableCell><Button onClick={() => {onClickRecoverButton(row.id)}}>복구</Button></TableCell>
             </TableRow>
           ))}

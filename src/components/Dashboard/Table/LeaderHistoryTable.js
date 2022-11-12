@@ -37,7 +37,6 @@ export default function LeaderHistoryTable(props) {
   // 잔액
   let money = 0;
   const rows = props.histories;
-  console.log("rows: ", rows)
   const categories = props.categories;
   const members = props.members;
 
@@ -144,7 +143,7 @@ export default function LeaderHistoryTable(props) {
         </FormControl>
         </Grid>
         <Grid item xs={3}>
-              <FormControl fullWidth>
+        <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">분기</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -175,7 +174,7 @@ export default function LeaderHistoryTable(props) {
             <TableCell>작성자</TableCell>
             <TableCell>영수증</TableCell>
             <TableCell align="right">
-              <BasicModal name={<Add />}>
+              <BasicModal variant='outlined' name="추가">
                 <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} initializeSearch={initializeSearch} />
               </BasicModal>
                 <Button><CsvData data={rows}/></Button>

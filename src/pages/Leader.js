@@ -11,6 +11,7 @@ import LeaderHistoryTable from '../components/Dashboard/Table/LeaderHistoryTable
 import { API_BASE_URL } from '../config/app-config';
 import axios from 'axios';
 import "../style/Main.css"
+import { BottomNavigation, BottomNavigationAction, Button, TextField } from '@mui/material';
 
 export default function Leader(props) {
   const [department, ] = React.useState({ name: props.match.params.name });
@@ -20,6 +21,9 @@ export default function Leader(props) {
   const [histories, setHistories] = React.useState([]);
   const [filteredHistories, setFilteredHistories] = React.useState([]);
   const [receipt, setReceipt] = React.useState(null);
+  const historyTab = React.useRef();
+  const categoryTab = React.useRef();
+  const memberTab = React.useRef();
 
   // 카테고리 관련 함수
   const getCategories = () => {
@@ -54,7 +58,6 @@ export default function Leader(props) {
     else {
       alert("취소되었습니다.")
     }
-    
   }
   const updateCategory = (item) => {
     if (item.title === '') {
@@ -167,6 +170,7 @@ export default function Leader(props) {
     .catch(err => console.log(err));
   };
 
+  // 결제 / 미결제 구분
   const changePaymentOrNot = (item) => {
     call("/history/payment?year=" + year, "PUT", item)
     .then(res => {
@@ -193,6 +197,7 @@ export default function Leader(props) {
   }
 
   React.useEffect(() => {
+    getNotice();
     getCategories();
     getHistories();
     getMembers();
@@ -202,9 +207,63 @@ export default function Leader(props) {
     setFilteredHistories(histories);
   }, [histories])
 
+  // 공지
+  const [notice, setNotice] = React.useState('');
+  const handleNoticeChange = (event) => {
+    setNotice(event.target.value);
+  }
+
+  const onClickNoticeButton = () => {
+    const item = {
+      name: department.name,
+      notice,
+    }
+    call("/department/notice", "PUT", item)
+    .then(res => {
+      setNotice(res.notice);
+      alert("공지가 변경되었습니다.")
+    })
+    .catch(res => console.log(res.error));
+  }
+
+  const getNotice = () => {
+    call("/department/notice", "GET", null)
+    .then(res => {
+      setNotice(res.notice)
+    })
+    .catch(res => console.log(res.error));
+  }
+
   return (
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
+              <Grid item xs={12}>
+               <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <div>
+                    <Grid container alignItems='center' spacing={2}>
+                      <Grid item xs={9} md={11}>
+                        <TextField
+                        id="outlined-multiline-flexible"
+                        label="공지"
+                        multiline
+                        value={notice === null ? '' : notice}
+                        fullWidth
+                        onChange={handleNoticeChange}
+                        />
+                      </Grid>
+                      <Grid item xs={1}>
+                        <Button variant='outlined' onClick={onClickNoticeButton}>저장</Button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                </Paper>
+              </Grid>
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -214,7 +273,7 @@ export default function Leader(props) {
                     height: 240,
                   }}
                 >
-                  <MonthlyChart histories={filteredHistories} />
+                  <MonthlyChart histories={filteredHistories}/>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
@@ -229,22 +288,31 @@ export default function Leader(props) {
                   <Status histories={filteredHistories} />
                 </Paper>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} ref={historyTab}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%',overflow: 'auto' }}>
                   <LeaderHistoryTable changePaymentOrNot={changePaymentOrNot} histories={filteredHistories} add={addHistory} setReceipt={setReceipt} deleteReceipt={deleteReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
                 </Paper>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} ref={categoryTab}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%', overflow: 'auto'  }}>
                   <CategoryTable categories={categories} add={addCategory} delete={deleteCategory} update={updateCategory} />
                 </Paper>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} ref={memberTab}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%',overflow: 'auto' }}>
                   <MemberTable members={members} delete={deleteMember} />
                 </Paper>
               </Grid>
             </Grid>
+            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+        <BottomNavigation
+          showLabels
+        >
+          <BottomNavigationAction label="내역현황" onClick={() => {historyTab.current.scrollIntoView()}}/>
+          <BottomNavigationAction label="카테고리" onClick={() => {categoryTab.current.scrollIntoView()}}/>
+          <BottomNavigationAction label="멤버관리" onClick={() => {memberTab.current.scrollIntoView()}}/>
+        </BottomNavigation>
+      </Paper>
           </Container>
   );
 }

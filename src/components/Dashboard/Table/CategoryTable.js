@@ -51,7 +51,7 @@ export default function Orders_category(props) {
             <TableCell>금액</TableCell>
             <TableCell>설명</TableCell>
             <TableCell align="right">
-              <BasicModal name={<Add />}><AddCategory add={props.add} /></BasicModal>
+              <BasicModal variant="outlined" name="추가"><AddCategory add={props.add} /></BasicModal>
               <BasicModal variant="outlined" name="복구"><DeletedCategoryTable /></BasicModal>
             </TableCell>
           </TableRow>

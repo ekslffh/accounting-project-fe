@@ -8,6 +8,7 @@ import { call, isCorrectQuarter } from '../service/ApiService';
 import UserHistoryTable from '../components/Dashboard/Table/UserHistoryTable';
 import axios from 'axios';
 import { API_BASE_URL } from '../config/app-config';
+import { TextField } from '@mui/material';
 
 export default function User(props) {
   const [categories, setCategories] = React.useState([]);
@@ -117,6 +118,7 @@ export default function User(props) {
   };
 
   React.useEffect(() => {
+    getNotice();
     getCategories();
     getHistories();
   }, []);
@@ -125,10 +127,47 @@ export default function User(props) {
     setSearchHistories(histories);
   }, [histories])
 
+  const [notice, setNotice] = React.useState('');
+  const handleNoticeChange = (event) => {
+    setNotice(event.target.value);
+  }
+
+  const getNotice = () => {
+    call("/department/notice", "GET", null)
+    .then(res => {
+      setNotice(res.notice)
+    })
+    .catch(res => console.log(res.error));
+  }
+
   return (
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
+              <Grid item xs={12}>
+               <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <div>
+                    <Grid container alignItems='center' spacing={2}>
+                      <Grid item xs={12}>
+                        <TextField
+                        id="outlined-multiline-flexible"
+                        label="공지"
+                        multiline
+                        value={notice === null ? '' : notice}
+                        fullWidth
+                        onChange={handleNoticeChange}
+                        />
+                      </Grid>
+                    </Grid>
+                  </div>
+                </Paper>
+              </Grid>
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
