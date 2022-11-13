@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Home(props) {
-    console.log(props.match.params.year);
     const [year, ] = React.useState(props.match.params.year);
     if (year !== undefined && isNaN(year)) return window.location.href = "/"
     const role = localStorage.getItem("role");

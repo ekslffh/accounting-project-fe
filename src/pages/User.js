@@ -177,7 +177,7 @@ export default function User(props) {
                     height: 240,
                   }}
                 >
-                  <MonthlyChart histories={histories} />
+                  <MonthlyChart histories={histories} year={year} />
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
