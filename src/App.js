@@ -13,7 +13,7 @@ import { logout } from './service/ApiService';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import { AccountCircleRounded } from '@mui/icons-material';
-import { green, grey, purple, red } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
@@ -91,14 +91,15 @@ export default function App() {
           <Toolbar />
           <BrowserRouter>
             <Switch>
-              <Route path='/signup' exact component={SignUp} />
-              <Route path="/signin" exact component={SignIn} />
-              <Route path="/admin" exact component={Admin} />
-              <Route path="/leader/:name/:year" exact component={Leader} />
-              <Route path="/user/:year" exact component={User} />
-              <Route path="/user-update" exact component={UserUpdate} />
-              <Route path="/access-denied" exact component={AccessDenied} />
-              <Route path="/:year" exact component={Home} />
+              <Route path='/signup' component={SignUp} />
+              <Route path="/signin" component={SignIn} />
+              <Route path="/admin" component={Admin} />
+              <Route path="/leader/:name/:year" component={Leader} />
+              <Route path="/user/:year" component={User} />
+              <Route path="/user-update" component={UserUpdate} />
+              <Route path="/access-denied" component={AccessDenied} />
+              <Route path="/:year" component={Home} />
+              <Route path="/" exact component={Home} />
               <Route component={NotFound} />
             </Switch>  
             <Copyright />

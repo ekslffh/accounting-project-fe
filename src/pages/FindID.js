@@ -113,11 +113,11 @@ export default function FindID() {
           <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid 
                container 
-               spacing={2} 
+               spacing={1} 
                direction="row"
                alignItems="center"
             >
-              <Grid item xs={10}>
+              <Grid item xs={12}>
                 <TextField
                   value={name}
                   onChange={handleNameChange}
@@ -128,7 +128,7 @@ export default function FindID() {
                   label="이름"
                 />
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={9} md={10}>
                 <TextField
                   fullWidth
                   id="phone-number"
@@ -141,8 +141,8 @@ export default function FindID() {
                   autoComplete="phone-number"
                 />
               </Grid>
-              <Grid item xs={2}>
-                  <Button variant='contained' onClick={onClickPhoneRequestButton}>인증번호 요청</Button>
+              <Grid item xs={3} md={2}>
+                  <Button variant='contained' onClick={onClickPhoneRequestButton}>전송</Button>
               </Grid>
               {phoneAuthContent}
             </Grid>

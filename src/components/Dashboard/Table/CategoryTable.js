@@ -10,7 +10,6 @@ import BasicModal from '../../BasicModal';
 import AddCategory from '../../AddCategory';
 import UpdateCategory from '../../UpdateCategory';
 import DeletedCategoryTable from './DeletedCategoryTable';
-import { Add } from '@mui/icons-material';
 import styled from '@emotion/styled';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -47,9 +46,9 @@ export default function Orders_category(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>이름</TableCell>
-            <TableCell>금액</TableCell>
-            <TableCell>설명</TableCell>
+            <TableCell align='center'>이름</TableCell>
+            <TableCell align='center'>금액</TableCell>
+            <TableCell align='center'>설명</TableCell>
             <TableCell align="right">
               <BasicModal variant="outlined" name="추가"><AddCategory add={props.add} /></BasicModal>
               <BasicModal variant="outlined" name="복구"><DeletedCategoryTable /></BasicModal>
@@ -59,9 +58,9 @@ export default function Orders_category(props) {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.title}</TableCell>
-              <TableCell>{row.amount}</TableCell>
-              <TableCell>{row.description}</TableCell>
+              <TableCell align='center'>{row.title}</TableCell>
+              <TableCell align='center'>{row.amount}</TableCell>
+              <TableCell align='center'>{row.description}</TableCell>
               <TableCell align="right">
                 <BasicModal variant="outlined" name="수정" color="warning"><UpdateCategory update={props.update} item={row}/></BasicModal>
                 <Button size='small' variant='outlined' color='error' onClick={() => {onClickDeleteButton(row.id)}}>삭제</Button>
@@ -69,8 +68,8 @@ export default function Orders_category(props) {
             </TableRow>
           ))}
            <TableRow>
-            <StyledTableCell>총합계</StyledTableCell>
-            <StyledTableCell>{totalAmount}</StyledTableCell>
+            <StyledTableCell align='center'>총합계</StyledTableCell>
+            <StyledTableCell align='center'>{totalAmount}</StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
           </TableRow>

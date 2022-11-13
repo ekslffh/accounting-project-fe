@@ -10,13 +10,9 @@ import BasicModal from '../../BasicModal'
 import AddHistory from '../../AddHistory';
 import UpdateHistory from '../../UpdateHistory';
 import styled from '@emotion/styled';
-import CsvData from '../CsvData';
-import { Add, DeleteForever, ReceiptLong } from '@mui/icons-material';
+import { Addchart, Clear, PanoramaFishEyeRounded, ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
 import ChangeYear from '../../ChangeYear';
-import PrintReceipts from '../../PrintReceipts';
-import EditIcon from '@mui/icons-material/Edit';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -58,7 +54,6 @@ export default function UserHistoryTable(props) {
   // 수입, 지출 별 합 구하기
   const totalIncome = rows.map(row => row.income).reduce((prev, cur) => prev + cur, 0);
   const totalExpenditure = rows.map(row => row.expenditure).reduce((prev, cur) => prev + cur, 0);
-  const imagePath = rows.map(row => row.imagePath).reduce((prev, cur) => prev.concat(cur), []);
 
    // 사용일 기준 오름차순
    rows.sort(function(a, b) {
@@ -76,10 +71,7 @@ export default function UserHistoryTable(props) {
   function parseDate(date) {
     const year =  date.substr(2,2);
     const month = (date.charAt(5) !== '0') ? date.substr(5, 2) : date.substr(6, 1);
-    // const day = (date.charAt(8) !== '0') ? date.substr(8,2) : date.substr(9,1);
     const day = date.substr(8,2);
-    const hour = date.substr(11,2);
-    const minute = date.substr(14,2);
     return `${year}${month}${day}`;
   }
 
@@ -139,7 +131,7 @@ export default function UserHistoryTable(props) {
       </FormControl>
         </Grid>
         <Grid item xs={1.5}>
-          <BasicModal name={<Add/>}>
+          <BasicModal name={<Addchart fontSize='large'/>}>
             <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} initializeSearch={initializeSearch} />
           </BasicModal>
         </Grid>
@@ -147,13 +139,14 @@ export default function UserHistoryTable(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>사용일</TableCell>
-            <TableCell>적요</TableCell>
-            <TableCell>수입</TableCell>
-            <TableCell>지출</TableCell>
-            <TableCell>잔액</TableCell>
-            <TableCell>비고</TableCell>
-            <TableCell>영수증</TableCell>
+            <TableCell align='center'>사용일</TableCell>
+            <TableCell align='center'>적요</TableCell>
+            <TableCell align='center'>수입</TableCell>
+            <TableCell align='center'>지출</TableCell>
+            <TableCell align='center'>잔액</TableCell>
+            <TableCell align='center'>비고</TableCell>
+            <TableCell align='center'>영수증</TableCell>
+            <TableCell align='center'>결제여부</TableCell>
             <TableCell>
               <BasicModal name="연도변경" color='modalButton'><ChangeYear /></BasicModal>
             </TableCell>
@@ -162,17 +155,18 @@ export default function UserHistoryTable(props) {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{parseDate(row.useDate)}</TableCell>
-              <TableCell>{row.category.title}</TableCell>
-              <TableCell>{row.income}</TableCell>
-              <TableCell>{row.expenditure}</TableCell>
-              <TableCell>{calcMoney(row.income, row.expenditure)}</TableCell>
-              <TableCell>{row.memo}</TableCell>
-              <TableCell>
+              <TableCell align='center'>{parseDate(row.useDate)}</TableCell>
+              <TableCell align='center'>{row.category.title}</TableCell>
+              <TableCell align='center'>{row.income}</TableCell>
+              <TableCell align='center'>{row.expenditure}</TableCell>
+              <TableCell align='center'>{calcMoney(row.income, row.expenditure)}</TableCell>
+              <TableCell align='center'>{row.memo}</TableCell>
+              <TableCell align='center'>
                 {(row.imagePath.length !== 0) 
                 && 
                 <BasicModal name={<ReceiptLong />}><BasicImageList items={row.imagePath} /></BasicModal>}
               </TableCell>
+              <TableCell align='center'>{(row.payment) ? <PanoramaFishEyeRounded /> : <Clear />}</TableCell>
               <TableCell>
                 <BasicModal variant="outlined" name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
                 <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
@@ -180,11 +174,11 @@ export default function UserHistoryTable(props) {
             </TableRow>
           ))}
           <TableRow>
-            <StyledTableCell>총합계</StyledTableCell>
+            <StyledTableCell align='center'>총합계</StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <StyledTableCell>{totalIncome}</StyledTableCell>
-            <StyledTableCell>{totalExpenditure}</StyledTableCell>
-            <StyledTableCell>{money}</StyledTableCell>
+            <StyledTableCell align='center'>{totalIncome}</StyledTableCell>
+            <StyledTableCell align='center'>{totalExpenditure}</StyledTableCell>
+            <StyledTableCell align='center'>{money}</StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>

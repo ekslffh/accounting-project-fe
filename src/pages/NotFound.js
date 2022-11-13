@@ -3,12 +3,6 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import { createTheme } from '@mui/material/styles';
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-const theme = createTheme();
 
 export default function NotFound() {
 

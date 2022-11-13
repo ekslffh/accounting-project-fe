@@ -4,7 +4,6 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from '../Title';
 import { Button } from '@mui/material';
 import { call } from '../../../service/ApiService';
 
@@ -42,23 +41,23 @@ export default function DeletedCategoryTable(props) {
 
   return (
     <React.Fragment>
-      <Title>카테고리</Title>
+      {/* <Title>카테고리</Title> */}
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>이름</TableCell>
-            <TableCell>설명</TableCell>
-            <TableCell>금액</TableCell>
+            <TableCell align='center'>이름</TableCell>
+            <TableCell align='center'>설명</TableCell>
+            <TableCell align='center'>금액</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {categories.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.title}</TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell>{row.amount}</TableCell>
-              <TableCell><Button onClick={() => {onClickRecoverButton(row.id)}}>복구</Button></TableCell>
+              <TableCell align='center'>{row.title}</TableCell>
+              <TableCell align='center'>{row.description}</TableCell>
+              <TableCell align='center'>{row.amount}</TableCell>
+              <TableCell align='center'><Button onClick={() => {onClickRecoverButton(row.id)}}>복구</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

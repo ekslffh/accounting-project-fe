@@ -11,7 +11,7 @@ import AddHistory from '../../AddHistory';
 import UpdateHistory from '../../UpdateHistory';
 import styled from '@emotion/styled';
 import CsvData from '../CsvData';
-import { Add, CheckOutlined, CheckRounded, ReceiptLong } from '@mui/icons-material';
+import { CheckRounded, ReceiptLong } from '@mui/icons-material';
 import BasicImageList from '../../BasicImageList';
 import ChangeYear from '../../ChangeYear';
 import PrintReceipts from '../../PrintReceipts';
@@ -164,15 +164,15 @@ export default function LeaderHistoryTable(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>결제여부</TableCell>
-            <TableCell>사용일</TableCell>
-            <TableCell>적요</TableCell>
-            <TableCell>수입</TableCell>
-            <TableCell>지출</TableCell>
-            <TableCell>잔액</TableCell>
-            <TableCell>비고</TableCell>
-            <TableCell>작성자</TableCell>
-            <TableCell>영수증</TableCell>
+            <TableCell align='center'>결제여부</TableCell>
+            <TableCell align='center'>사용일</TableCell>
+            <TableCell align='center'>적요</TableCell>
+            <TableCell align='center'>수입</TableCell>
+            <TableCell align='center'>지출</TableCell>
+            <TableCell align='center'>잔액</TableCell>
+            <TableCell align='center'>비고</TableCell>
+            <TableCell align='center'>작성자</TableCell>
+            <TableCell align='center'>영수증</TableCell>
             <TableCell align="right">
               <BasicModal variant='outlined' name="추가">
                 <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} initializeSearch={initializeSearch} />
@@ -184,15 +184,15 @@ export default function LeaderHistoryTable(props) {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.payment && <CheckRounded color='primary'/>}</TableCell>
-              <TableCell>{parseDate(row.useDate)}</TableCell>
-              <TableCell>{row.category.title}</TableCell>
-              <TableCell>{row.income}</TableCell>
-              <TableCell>{row.expenditure}</TableCell>
-              <TableCell>{calcMoney(row.income, row.expenditure)}</TableCell>
-              <TableCell>{row.memo}</TableCell>
-              <TableCell>{row.member.name}</TableCell>
-              <TableCell>
+              <TableCell align='center'>{row.payment && <CheckRounded color='primary'/>}</TableCell>
+              <TableCell align='center'>{parseDate(row.useDate)}</TableCell>
+              <TableCell align='center'>{row.category.title}</TableCell>
+              <TableCell align='center'>{row.income}</TableCell>
+              <TableCell align='center'>{row.expenditure}</TableCell>
+              <TableCell align='center'>{calcMoney(row.income, row.expenditure)}</TableCell>
+              <TableCell align='center'>{row.memo}</TableCell>
+              <TableCell align='center'>{row.member.name}</TableCell>
+              <TableCell align='center'>
                 {(row.imagePath.length !== 0) 
                 && 
                 <BasicModal name={<ReceiptLong />}><BasicImageList items={row.imagePath} /></BasicModal>}
@@ -209,11 +209,11 @@ export default function LeaderHistoryTable(props) {
             </TableRow>
           ))}
           <TableRow>
-            <StyledTableCell>총합계</StyledTableCell>
+            <StyledTableCell align='center'>총합계</StyledTableCell>
             <StyledTableCell></StyledTableCell>
-            <StyledTableCell>{totalIncome}</StyledTableCell>
-            <StyledTableCell>{totalExpenditure}</StyledTableCell>
-            <StyledTableCell>{money}</StyledTableCell>
+            <StyledTableCell align='center'>{totalIncome}</StyledTableCell>
+            <StyledTableCell align='center'>{totalExpenditure}</StyledTableCell>
+            <StyledTableCell align='center'>{money}</StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>

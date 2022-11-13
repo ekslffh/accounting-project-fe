@@ -127,7 +127,7 @@ export default function FindPW() {
                direction="row"
                alignItems="center"
             >
-              <Grid item xs={10}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -139,7 +139,7 @@ export default function FindPW() {
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={12}>
                 <TextField
                   name="name"
                   required
@@ -150,7 +150,7 @@ export default function FindPW() {
                   label="이름"
                 />
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={9} md={10}>
                 <TextField
                   fullWidth
                   id="phone-number"
@@ -163,12 +163,12 @@ export default function FindPW() {
                   autoComplete="phone-number"
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={3} md={2}>
                 {phoneAuthCheck 
                   ? 
                   <Done fontSize='large' color='primary'/>
                   : 
-                  <Button variant='contained' onClick={onClickPhoneRequestButton}>인증번호 요청</Button>
+                  <Button variant='contained' onClick={onClickPhoneRequestButton}>전송</Button>
                 }
               </Grid>
               {phoneAuthContent}

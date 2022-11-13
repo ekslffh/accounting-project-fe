@@ -10,10 +10,6 @@ import styled from '@emotion/styled';
 import BasicModal from '../../BasicModal';
 import DeletedMemberTable from './DeletedMemberTable';
 
-function preventDefault(event) {
-  event.preventDefault();
-}
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     // color: theme.palette.common.white,
@@ -23,10 +19,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 export default function Orders_member(props) {
 
-  const [categories, setCategories] = React.useState([]);
-  const [category, setCategory] = React.useState({id: ''});
   const rows = props.members;
-
+  
   const onClickDeleteButton = (email) => {
     const item = {email}
     props.delete(item);
@@ -48,12 +42,12 @@ export default function Orders_member(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell><div>이메일</div></TableCell>
-            <TableCell>이름</TableCell>
-            <TableCell>전화번호</TableCell>
-            <TableCell>생년월일</TableCell>
-            <TableCell>가입일</TableCell>
-            <TableCell>직급</TableCell>
+            <TableCell align='center'><div>이메일</div></TableCell>
+            <TableCell align='center'>이름</TableCell>
+            <TableCell align='center'>전화번호</TableCell>
+            <TableCell align='center'>생년월일</TableCell>
+            <TableCell align='center'>가입일</TableCell>
+            <TableCell align='center'>직급</TableCell>
             <TableCell align='right'><BasicModal variant="outlined" name="복구"><DeletedMemberTable /></BasicModal></TableCell>
           </TableRow>
         </TableHead>
@@ -63,24 +57,24 @@ export default function Orders_member(props) {
             ?
             (
               <TableRow key={row.id}>
-                <StyledTableCell>{row.email}</StyledTableCell>
-                <StyledTableCell>{row.name}</StyledTableCell>
-                <StyledTableCell>{row.phoneNumber}</StyledTableCell>
-                <StyledTableCell>{row.birth}</StyledTableCell>
-                <StyledTableCell>{parseDate(row.createdAt)}</StyledTableCell>
-                <StyledTableCell>리더</StyledTableCell>
+                <StyledTableCell align='center'>{row.email}</StyledTableCell>
+                <StyledTableCell align='center'>{row.name}</StyledTableCell>
+                <StyledTableCell align='center'>{row.phoneNumber}</StyledTableCell>
+                <StyledTableCell align='center'>{row.birth}</StyledTableCell>
+                <StyledTableCell align='center'>{parseDate(row.createdAt)}</StyledTableCell>
+                <StyledTableCell align='center'>리더</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
               </TableRow>
             )
             :
             (
               <TableRow key={row.id}>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.phoneNumber}</TableCell>
-                <TableCell>{row.birth}</TableCell>
-                <TableCell>{parseDate(row.createdAt)}</TableCell>
-                <TableCell>멤버</TableCell>
+                <TableCell align='center'>{row.email}</TableCell>
+                <TableCell align='center'>{row.name}</TableCell>
+                <TableCell align='center'>{row.phoneNumber}</TableCell>
+                <TableCell align='center'>{row.birth}</TableCell>
+                <TableCell align='center'>{parseDate(row.createdAt)}</TableCell>
+                <TableCell align='center'>멤버</TableCell>
                 <TableCell align='right'>    
                   <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row.email)}}>삭제</Button>
                 </TableCell>
