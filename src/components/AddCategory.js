@@ -39,6 +39,7 @@ export default function AddCategory(props) {
     props.add(inputData);
     setTitle("");
     setDescription("");
+    setAmount(0);
   };
 
   return (

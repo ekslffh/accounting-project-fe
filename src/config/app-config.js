@@ -4,8 +4,8 @@ const hostname = window && window.location && window.location.hostname;
 
 // http://localhost:8080
 if (hostname === "localhost") {
-    // backendHost = "http://localhost:8080";
-    backendHost = "https://api.hsap.link";
+    backendHost = "http://localhost:8080";
+    // backendHost = "https://api.hsap.link";
 } else {
     backendHost = "https://api.hsap.link";
 }

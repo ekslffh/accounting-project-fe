@@ -90,7 +90,6 @@ export default function Leader(props) {
       alert("취소되었습니다.")
     }
   }
-
   // 수입, 지출 내역 관련 함수
   const getHistories = () => {
     call("/department/histories?name=" + department.name + "&year=" + year, "GET", null)
