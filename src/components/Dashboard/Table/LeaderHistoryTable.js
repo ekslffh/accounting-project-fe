@@ -211,10 +211,10 @@ export default function LeaderHistoryTable(props) {
           <TableRow>
             <StyledTableCell align='center'>총합계</StyledTableCell>
             <StyledTableCell></StyledTableCell>
+            <StyledTableCell></StyledTableCell>
             <StyledTableCell align='center'>{totalIncome}</StyledTableCell>
             <StyledTableCell align='center'>{totalExpenditure}</StyledTableCell>
             <StyledTableCell align='center'>{money}</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
