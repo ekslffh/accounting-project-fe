@@ -61,6 +61,7 @@ export default function User(props) {
     .then(res => alert("내역이 추가되었습니다."))
     .catch(error => {
       console.log(error);
+      alert(err); // 임시방편
     })
   };
 
@@ -116,7 +117,10 @@ export default function User(props) {
       alert("내역이 수정되었습니다.")
       setHistories(res.data.data);
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      console.log(err);
+      alert(err); // 임시방편
+    })
   };
 
   React.useEffect(() => {
