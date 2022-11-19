@@ -90,7 +90,7 @@ export default function User(props) {
         alert("영수증이 삭제되었습니다.");
         setHistories(res.data.data);
       })
-      .catch(res => console.log(res.data.error));
+      .catch(err => console.log(res.data.error));
     } else {
       alert("취소되었습니다.");
     }
@@ -116,7 +116,7 @@ export default function User(props) {
       alert("내역이 수정되었습니다.")
       setHistories(res.data.data);
     })
-    .catch(res => console.log(res.data.error))
+    .catch(err => console.log(err))
   };
 
   React.useEffect(() => {
