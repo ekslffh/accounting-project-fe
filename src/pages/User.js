@@ -61,7 +61,7 @@ export default function User(props) {
     .then(res => alert("내역이 추가되었습니다."))
     .catch(res => {
       console.log(res.data.error);
-      console.log(res.data.error.status);
+      console.log(res.error);
     })
   };
 
