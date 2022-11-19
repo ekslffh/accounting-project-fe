@@ -61,7 +61,7 @@ export default function User(props) {
     .then(res => alert("내역이 추가되었습니다."))
     .catch(error => {
       console.log(error);
-      alert(err); // 임시방편
+      alert(error); // 임시방편
     })
   };
 
@@ -91,7 +91,7 @@ export default function User(props) {
         alert("영수증이 삭제되었습니다.");
         setHistories(res.data.data);
       })
-      .catch(err => console.log(res.data.error));
+      .catch(res => console.log(res.data.error));
     } else {
       alert("취소되었습니다.");
     }
