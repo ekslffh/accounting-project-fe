@@ -281,7 +281,7 @@ export default function Leader(props) {
                     height: 240,
                   }}
                 >
-                  <MonthlyChart histories={filteredHistories} year={year} />
+                  <MonthlyChart histories={histories} year={year} />
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
