@@ -73,7 +73,6 @@ export default function AddHistory(props) {
     setAmount('');
     props.setReceipt(null);
     fileInput.current.value = '';
-    props.initializeSearch();
   };
 
   const handleMemoChange = (event) => {

@@ -24,16 +24,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export default function LeaderHistoryTable(props) {
-
-  const [category, setCategory] = React.useState({id: ''});
-  const [member, setMember] = React.useState({id: ''});
-  const [quarter, setQuarter] = React.useState('');
-  // 검색필터 기준 (카테고리, 분기)
-  const [search, setSearch] = React.useState({
-    member: {id: 0},
-    category: {id: 0},
-    quarter: 0,
-  })
   // 잔액
   let money = 0;
   const rows = props.histories;
@@ -41,16 +31,13 @@ export default function LeaderHistoryTable(props) {
   const members = props.members;
 
   const handleCategoryChange = (event) => {
-    setCategory({id: event.target.value});
-    setSearch((preSearch) => ({...preSearch, category: {id: event.target.value}}));
+    props.setCategory({id: event.target.value});
   };
   const handleMemberChange = (event) => {
-    setMember({id: event.target.value});
-    setSearch((preSearch) => ({...preSearch, member: {id: event.target.value}}));
+    props.setMember({id: event.target.value});
   }
   const handleTimeChange = (event) => {
-    setQuarter(event.target.value);
-    setSearch((preSearch) => ({...preSearch, quarter: event.target.value}));
+    props.setQuarter(event.target.value);
   };
   const onClickDeleteButton = (row) => {
     const item = {
@@ -58,7 +45,6 @@ export default function LeaderHistoryTable(props) {
       imagePath: row.imagePath
     }
     props.delete(item);
-    initializeSearch();
   }
   const onClickPaymentButton = (row) => {
     const item = {
@@ -81,11 +67,6 @@ export default function LeaderHistoryTable(props) {
     return 0;
   })
 
-  function initializeSearch() {
-    setCategory({id : ''})
-    setQuarter('');
-  }
-
   function parseDate(date) {
     const year =  date.substr(2, 2);
     const month = date.substr(5, 2); //(date.charAt(5) !== '0') ? date.substr(5, 2) : date.substr(6, 1);
@@ -102,10 +83,6 @@ export default function LeaderHistoryTable(props) {
     return money;
   }
 
-  React.useEffect(() => {
-    props.filterHistories(search);
-  }, [search]);
-
   return (
     <React.Fragment>
       <Grid container spacing={1}>
@@ -118,7 +95,7 @@ export default function LeaderHistoryTable(props) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={member.id}
+            value={props.member.id}
             label="member"
             onChange={handleMemberChange}
           >
@@ -133,7 +110,7 @@ export default function LeaderHistoryTable(props) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={category.id}
+            value={props.category.id}
             label="category"
             onChange={handleCategoryChange}
           >
@@ -148,7 +125,7 @@ export default function LeaderHistoryTable(props) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={quarter}
+          value={props.quarter}
           label="Age"
           onChange={handleTimeChange}
         >
@@ -175,7 +152,7 @@ export default function LeaderHistoryTable(props) {
             <TableCell align='center'>영수증</TableCell>
             <TableCell align="right">
               <BasicModal variant='outlined' name="추가">
-                <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} initializeSearch={initializeSearch} />
+                <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} />
               </BasicModal>
                 <Button><CsvData data={rows}/></Button>
             </TableCell>
@@ -203,7 +180,7 @@ export default function LeaderHistoryTable(props) {
                 :
                 <Button variant='outlined' color='error' size='small' onClick={() => {onClickPaymentButton(row)}}>취소</Button>
                 }
-                <BasicModal variant="outlined" name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} initializeSearch={initializeSearch} /></BasicModal>
+                <BasicModal variant="outlined" name="수정" color="warning"><UpdateHistory deleteReceipt={props.deleteReceipt} setReceipt={props.setReceipt} imagePath={row.imagePath} categories={categories} item={row} update={props.update} /></BasicModal>
                 <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row)}}>삭제</Button>
               </TableCell>
             </TableRow>

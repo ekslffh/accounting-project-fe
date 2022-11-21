@@ -87,7 +87,6 @@ export default function UpdateHistory(props) {
     inputData.imagePath = props.imagePath;
     props.update(inputData);
     props.setReceipt(null);
-    props.initializeSearch();
     fileInput.current.value = '';
   };
 

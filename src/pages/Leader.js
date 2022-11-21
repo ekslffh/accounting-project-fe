@@ -6,7 +6,7 @@ import MonthlyChart from '../components/Dashboard/MonthlyChart';
 import Status from '../components/Dashboard/Status';
 import MemberTable from '../components/Dashboard/Table/MemberTable';
 import CategoryTable from '../components/Dashboard/Table/CategoryTable';
-import { call, isCorrectQuarter } from '../service/ApiService';
+import { call, getCurrentQuarter, isCorrectQuarter } from '../service/ApiService';
 import LeaderHistoryTable from '../components/Dashboard/Table/LeaderHistoryTable';
 import { API_BASE_URL } from '../config/app-config';
 import axios from 'axios';
@@ -24,6 +24,19 @@ export default function Leader(props) {
   const historyTab = React.useRef();
   const categoryTab = React.useRef();
   const memberTab = React.useRef();
+
+  const [category, setCategory] = React.useState({id: 0});
+  const [member, setMember] = React.useState({id: 0});
+  const [quarter, setQuarter] = React.useState(getCurrentQuarter());
+
+  React.useEffect(() => {
+    const search = {
+      member,
+      category,
+      quarter
+    }
+    filterHistories(search)
+  }, [category, member, quarter, histories])
 
   // 카테고리 관련 함수
   const getCategories = () => {
@@ -202,10 +215,6 @@ export default function Leader(props) {
     getMembers();
   }, []);
 
-  React.useEffect(() => {
-    setFilteredHistories(histories);
-  }, [histories])
-
   // 공지
   const [notice, setNotice] = React.useState('');
   const handleNoticeChange = (event) => {
@@ -289,7 +298,7 @@ export default function Leader(props) {
               </Grid>
               <Grid item xs={12} ref={historyTab}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%',overflow: 'auto' }}>
-                  <LeaderHistoryTable changePaymentOrNot={changePaymentOrNot} histories={filteredHistories} add={addHistory} setReceipt={setReceipt} deleteReceipt={deleteReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
+                  <LeaderHistoryTable category={category} setCategory={setCategory} member={member} setMember={setMember} quarter={quarter} setQuarter={setQuarter} changePaymentOrNot={changePaymentOrNot} histories={filteredHistories} add={addHistory} setReceipt={setReceipt} deleteReceipt={deleteReceipt} delete={deleteHistory} update={updateHistory} categories={categories} filterHistories={filterHistories} members={members} />
                 </Paper>
               </Grid>
               <Grid item xs={12} ref={categoryTab}>
