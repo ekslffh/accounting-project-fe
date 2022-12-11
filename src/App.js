@@ -14,6 +14,7 @@ import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import { AccountCircleRounded } from '@mui/icons-material';
 import { grey } from '@mui/material/colors';
+import People from './pages/People';
 
 const theme = createTheme({
   palette: {
@@ -97,6 +98,7 @@ export default function App() {
               <Route path="/leader/:name/:year" component={Leader} />
               <Route path="/user/:year" component={User} />
               <Route path="/user-update" component={UserUpdate} />
+              <Route path="/member/:name" component={People} />
               <Route path="/access-denied" component={AccessDenied} />
               <Route path="/:year" component={Home} />
               <Route path="/" exact component={Home} />

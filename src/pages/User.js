@@ -139,7 +139,7 @@ export default function User(props) {
   }
 
   const getNotice = () => {
-    call("/department/notice", "GET", null)
+    call("/department/notice?department=" + localStorage.getItem("department"), "GET", null)
     .then(res => {
       setNotice(res.notice)
     })

@@ -235,7 +235,7 @@ export default function Leader(props) {
   }
 
   const getNotice = () => {
-    call("/department/notice", "GET", null)
+    call("/department/notice?department=" + department.name, "GET", null)
     .then(res => {
       setNotice(res.notice)
     })
