@@ -24,13 +24,13 @@ function ReceiptsList(props) {
             <div className="pagebreak"></div>
             {chunk(props.items, 4).map((imageList, listIndex) => {
               return (
-                    <div className="receiptlayout" key={listIndex}>
+                    <div key={listIndex}>
                       <br/>
                       {imageList.map((image, idx) => {
                         return (
-                            <img className="imageblock" width="315" height="490" src={image} alt="영수증" key={idx}/>
+                            <img className="imageblock" width="315" height="480" src={image} alt="영수증" key={idx}/>
                         )})}
-                      <div className="pagebreak" key={listIndex}></div>
+                      {/* <div className="pagebreak" key={listIndex}></div> */}
                     </div>
                   )
               })}

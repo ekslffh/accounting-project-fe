@@ -8,7 +8,9 @@ import Title from '../Title';
 import { Button, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import BasicModal from '../../BasicModal';
-import DeletedMemberTable from './DeletedMemberTable';
+import AddCategory from '../../AddCategory';
+import AddMember from '../../AddMember';
+import UpdateMember from '../../\bUpdateMember';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -22,9 +24,9 @@ export default function AllMembersTable(props) {
   const rows = props.members;
   const department = props.department;
   
-  const onClickDeleteButton = (email) => {
-    const item = {email}
-    props.delete(item);
+  const onClickDeleteButton = (id) => {
+    const item = {id}
+    props.deleteMember(item);
   }
 
   // LocalDateTime -> xxxx년 xx월 xx일 변환하는 함수
@@ -49,7 +51,7 @@ export default function AllMembersTable(props) {
             <TableCell align='center'>생년월일</TableCell>
             <TableCell align='center'>상태</TableCell>
             <TableCell align='center'>메모</TableCell>
-            <TableCell align='right'><BasicModal variant="outlined" name="추가"><DeletedMemberTable /></BasicModal></TableCell>
+            <TableCell align='right'><BasicModal variant="outlined" name="추가"><AddMember addMember={props.addMember} /></BasicModal></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -63,7 +65,8 @@ export default function AllMembersTable(props) {
                 <TableCell align='center'>{row.status}</TableCell>
                 <TableCell align='center'>{row.memo}</TableCell>
                 <TableCell align='right'>    
-                  <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row.email)}}>삭제</Button>
+                  <BasicModal variant="outlined" name="수정" color="warning"><UpdateMember item={row} updateMember={props.updateMember}/></BasicModal>
+                  <Button variant='outlined' size='small' color='error' onClick={() => {onClickDeleteButton(row.id)}}>삭제</Button>
                 </TableCell>
               </TableRow>
             )
