@@ -7,29 +7,20 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import RaidoGender from './RadioGender';
-import RaidoStatus from './RadioStatus';
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 
 const theme = createTheme();
 
 export default function AddMember(props) {
 
-const [title, setTitle] = React.useState('')
-const [description, setDescription] = React.useState('')
-const [amount, setAmount] = React.useState("")
-
   const [member, setMember] = React.useState({
     status: 'ACTIVE',
     name: '',
     gender: 'MALE',
-    phone: '',
+    phoneNumber: '',
     birth: '',
     memo: ''
   });
-
-  React.useEffect(() => {
-    console.log("member:", member)
-  }, [member])
 
   const handleGenderChange = (event) => {
     setMember(prev => ({...prev, gender: event.target.value}))
@@ -44,7 +35,7 @@ const [amount, setAmount] = React.useState("")
   }
 
   const handlePhoneChange = (event) => {
-    setMember(prev => ({...prev, phone: event.target.value}))
+    setMember(prev => ({...prev, phoneNumber: event.target.value}))
   }
 
   const handleBirthChange = (event) => {
@@ -55,27 +46,14 @@ const [amount, setAmount] = React.useState("")
     setMember(prev => ({...prev, memo: event.target.value}))
   }
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-  
-  const handleDescChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const handleAmountChange = (event) => {
-    setAmount(event.target.value);
-  }
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
     props.addMember(member);
     setMember({
     status: 'ACTIVE',
     name: '',
     gender: 'MALE',
-    phone: '',
+    phoneNumber: '',
     birth: '',
     memo: ''
     })
@@ -98,7 +76,21 @@ const [amount, setAmount] = React.useState("")
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <RaidoStatus handleStatusChange={handleStatusChange} status="ACTIVE" />
+                <FormControl>
+                  <FormLabel id="demo-radio-buttons-group-label">상태</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    value={member.status}
+                    name="radio-buttons-group"
+                    onChange={handleStatusChange}
+                  >
+                    <FormControlLabel value="ACTIVE" control={<Radio />} label="활성화"/>
+                    <FormControlLabel value="JOURNEY" control={<Radio />} label="영적여정" />
+                    <FormControlLabel value="SPECIAL" control={<Radio />} label="특수상황" />
+                    <FormControlLabel value="INACTIVE" control={<Radio />} label="비활성화" />
+                  </RadioGroup>
+                </FormControl>
               </Grid>
               <Grid item xs={9}>
                 <TextField
@@ -114,7 +106,19 @@ const [amount, setAmount] = React.useState("")
                 />
               </Grid>
               <Grid item xs={3}>
-                <RaidoGender handleGenderChange={handleGenderChange} gender="MALE" />
+                  <FormControl>
+                    <FormLabel id="demo-radio-buttons-group-label">성별</FormLabel>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-radio-buttons-group-label"
+                      value={member.gender}
+                      name="radio-buttons-group"
+                      onChange={handleGenderChange}
+                    >
+                      <FormControlLabel value="MALE" control={<Radio />} label="남" />
+                      <FormControlLabel value="FEMALE" control={<Radio />} label="여" />
+                    </RadioGroup>
+                  </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -123,7 +127,7 @@ const [amount, setAmount] = React.useState("")
                   label="전화번호"
                   id="phone"
                   autoComplete="phone"
-                  value={member.phone}
+                  value={member.phoneNumber}
                   onChange={handlePhoneChange}
                 />
               </Grid>

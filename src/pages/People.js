@@ -7,12 +7,10 @@ import { call } from "../service/ApiService";
 export default function People(props) {
     const [department, ] = React.useState({ name: props.match.params.name });
     const [members, setMembers] = React.useState([])
-    console.log(department)
 
     const getMembers = () => {
         call("/department/peoples?name=" + department.name, "GET", null)
         .then(res => {
-            console.log(res.data)
             setMembers(res.data)
         })
         .catch(res => {
@@ -22,7 +20,6 @@ export default function People(props) {
     const addMember = (item) => {
         call("/people", "POST", item)
         .then(res => {
-            console.log(res.data)
             setMembers(res.data)
         })
         .catch(res => {
@@ -32,7 +29,6 @@ export default function People(props) {
     const updateMember = (item) => {
         call("/people", "PUT", item)
         .then(res => {
-            console.log(res.data)
             setMembers(res.data)
         })
         .catch(res => {
@@ -43,7 +39,6 @@ export default function People(props) {
         item.department = {name: department.name}
         call("/people", "DELETE", item)
         .then(res => {
-            console.log(res.data)
             setMembers(res.data)
         })
         .catch(res => {
@@ -56,7 +51,6 @@ export default function People(props) {
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
-          {/* Chart */}
            <Grid item xs={12}>
                 <Paper
                 sx={{

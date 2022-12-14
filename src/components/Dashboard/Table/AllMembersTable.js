@@ -1,23 +1,14 @@
 import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
 import { Button, Typography } from '@mui/material';
-import styled from '@emotion/styled';
 import BasicModal from '../../BasicModal';
-import AddCategory from '../../AddCategory';
 import AddMember from '../../AddMember';
 import UpdateMember from '../../\bUpdateMember';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.body}`]: {
-    // color: theme.palette.common.white,
-    backgroundColor: '#bbdefb',
-  },
-}));
 
 export default function AllMembersTable(props) {
 
@@ -29,13 +20,12 @@ export default function AllMembersTable(props) {
     props.deleteMember(item);
   }
 
-  // LocalDateTime -> xxxx년 xx월 xx일 변환하는 함수
-  function parseDate(date) {
-    if (date === null) return null;
-    const year =  date.substr(0, 4);
-    const month = (date.charAt(5) !== '0') ? date.substr(5, 2) : date.substr(6, 1);
-    const day = (date.charAt(8) !== '0') ? date.substr(8,2) : date.substr(9,1);
-    return `${year}년 ${month}월 ${day}일`;
+  const parseStatus = (status) => {
+    if (status === "ACTIVE") return "활성화"
+    else if (status === "JOURNEY") return "영적여정"
+    else if (status === "SPECIAL") return "특수상황"
+    else if (status === "INACTIVE") return "비활성화"
+    else return "NONE"
   }
 
   return (
@@ -62,7 +52,7 @@ export default function AllMembersTable(props) {
                 <TableCell align='center'>{row.gender === 'MALE' ? '남' : '여'}</TableCell>
                 <TableCell align='center'>{row.phoneNumber}</TableCell>
                 <TableCell align='center'>{row.birth}</TableCell>
-                <TableCell align='center'>{row.status}</TableCell>
+                <TableCell align='center'>{parseStatus(row.status)}</TableCell>
                 <TableCell align='center'>{row.memo}</TableCell>
                 <TableCell align='right'>    
                   <BasicModal variant="outlined" name="수정" color="warning"><UpdateMember item={row} updateMember={props.updateMember}/></BasicModal>
