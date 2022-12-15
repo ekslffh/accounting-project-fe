@@ -1,4 +1,5 @@
 import { Box, Grid } from "@mui/material";
+import { Line } from "recharts";
 
 function ReceiptsBox() {
     return (
@@ -35,7 +36,7 @@ function ReceiptsBox() {
 
 export default function ReceiptsBoard() {
     return (
-        <Grid container >
+        <Grid container >          
             <ReceiptsBox />
             <ReceiptsBox />
             <ReceiptsBox />

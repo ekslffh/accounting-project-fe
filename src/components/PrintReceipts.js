@@ -20,7 +20,7 @@ function ReceiptsList(props) {
     return (
       <div style={{ display: "none" }}>
            <Container ref={printRef}>
-            <ReceiptsBoard />
+            {/* <ReceiptsBoard /> */}
             <div className="pagebreak"></div>
             {chunk(props.items, 4).map((imageList, listIndex) => {
               return (
