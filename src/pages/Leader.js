@@ -308,7 +308,7 @@ export default function Leader(props) {
               </Grid>
               <Grid item xs={12} ref={memberTab}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%',overflow: 'auto' }}>
-                  <MemberTable members={members} delete={deleteMember} />
+                  <MemberTable members={members} delete={deleteMember} department={department.name} />
                 </Paper>
               </Grid>
             </Grid>

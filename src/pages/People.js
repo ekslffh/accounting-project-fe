@@ -22,6 +22,7 @@ export default function People(props) {
         .then(res => {
             setMembers(res.data)
         })
+        .then(res => alert("멤버가 추가되었습니다."))
         .catch(res => {
             console.log(res.error)
         })
@@ -31,19 +32,25 @@ export default function People(props) {
         .then(res => {
             setMembers(res.data)
         })
+        .then(res => alert("멤버가 수정되었습니다."))
         .catch(res => {
             console.log(res.error)
         })
     }
     const deleteMember = (item) => {
         item.department = {name: department.name}
+        if (window.confirm("정말 삭제하시겠습니까?")) {
         call("/people", "DELETE", item)
         .then(res => {
             setMembers(res.data)
         })
+        .then(res => alert("멤버가 삭제되었습니다."))
         .catch(res => {
             console.log(res.error)
         })
+        } else {
+            alert("취소되었습니다.")
+        }
     }
     React.useEffect(() => {
         getMembers();

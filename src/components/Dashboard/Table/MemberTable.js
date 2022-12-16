@@ -5,7 +5,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
-import { Button, Typography } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import BasicModal from '../../BasicModal';
 import DeletedMemberTable from './DeletedMemberTable';
@@ -48,7 +48,10 @@ export default function Orders_member(props) {
             <TableCell align='center'>생년월일</TableCell>
             <TableCell align='center'>가입일</TableCell>
             <TableCell align='center'>직급</TableCell>
-            <TableCell align='right'><BasicModal variant="outlined" name="복구"><DeletedMemberTable /></BasicModal></TableCell>
+            <TableCell align='right'>
+              <BasicModal variant="outlined" name="복구"><DeletedMemberTable /></BasicModal>
+              <Button color='modalButton' size='small' onClick={() => {window.location.href = "/member/" + props.department}}>전체보기</Button>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
