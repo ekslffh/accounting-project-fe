@@ -29,6 +29,7 @@ export default function CsvData(props) {
       }
 
       const data = props.data.map(d => createData(d));
+      data.push({category: "누계", income: props.totalIncome, expenditure: props.totalExpenditure, balance: props.totalIncome - props.totalExpenditure})
 
     return <CSVLink filename={name} data={data} headers={headers}>EXCEL</CSVLink>;
 }

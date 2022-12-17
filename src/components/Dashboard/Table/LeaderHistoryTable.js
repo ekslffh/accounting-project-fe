@@ -154,7 +154,7 @@ export default function LeaderHistoryTable(props) {
               <BasicModal variant='outlined' name="추가">
                 <AddHistory add={props.add} setReceipt={props.setReceipt} categories={categories} />
               </BasicModal>
-                <Button><CsvData data={rows}/></Button>
+                <Button><CsvData data={rows} totalIncome={totalIncome} totalExpenditure={totalExpenditure} /></Button>
             </TableCell>
           </TableRow>
         </TableHead>
