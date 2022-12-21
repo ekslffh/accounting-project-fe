@@ -5,12 +5,13 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import BasicModal from '../../BasicModal';
 import AddCategory from '../../AddCategory';
 import UpdateCategory from '../../UpdateCategory';
 import DeletedCategoryTable from './DeletedCategoryTable';
 import styled from '@emotion/styled';
+import CategoryCsvData from '../CategoryCsvData';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -42,7 +43,12 @@ export default function Orders_category(props) {
 
   return (
     <React.Fragment>
-      <Title>카테고리</Title>
+      <Grid container>
+       <Grid item xs={10}>
+        <Title>카테고리</Title>
+       </Grid> 
+       <Grid item xs={2} align="right" padding={"0 16px"}><CategoryCsvData year={props.year} /></Grid>
+      </Grid>
       <Table size="small">
         <TableHead>
           <TableRow>

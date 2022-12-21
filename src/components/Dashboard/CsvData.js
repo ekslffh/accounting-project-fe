@@ -1,6 +1,10 @@
-import { CSVLink } from "react-csv";
+import { Button } from "@mui/material";
+import { useRef } from "react";
+import { CSVDownload, CSVLink } from "react-csv";
 
 export default function CsvData(props) {
+
+    const csvLink = useRef();
 
     const headers = [
         { label: "사용일", key: "useDate" },
@@ -31,5 +35,10 @@ export default function CsvData(props) {
       const data = props.data.map(d => createData(d));
       data.push({category: "누계", income: props.totalIncome, expenditure: props.totalExpenditure, balance: props.totalIncome - props.totalExpenditure})
 
-    return <CSVLink filename={name} data={data} headers={headers}>EXCEL</CSVLink>;
+      const clickCsvButton = async () => await csvLink.current.link.click()
+
+
+    return (
+      <CSVLink filename={name} data={data} headers={headers} ref={csvLink} target="_blank">EXCEL</CSVLink>
+    );
 }

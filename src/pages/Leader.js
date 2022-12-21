@@ -24,7 +24,6 @@ export default function Leader(props) {
   const historyTab = React.useRef();
   const categoryTab = React.useRef();
   const memberTab = React.useRef();
-
   const [category, setCategory] = React.useState({id: 0});
   const [member, setMember] = React.useState({id: 0});
   const [quarter, setQuarter] = React.useState(getCurrentQuarter());
@@ -303,7 +302,7 @@ export default function Leader(props) {
               </Grid>
               <Grid item xs={12} ref={categoryTab}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%', overflow: 'auto'  }}>
-                  <CategoryTable categories={categories} add={addCategory} delete={deleteCategory} update={updateCategory} />
+                  <CategoryTable categories={categories} add={addCategory} delete={deleteCategory} update={updateCategory} year={year} />
                 </Paper>
               </Grid>
               <Grid item xs={12} ref={memberTab}>
