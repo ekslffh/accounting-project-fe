@@ -63,7 +63,7 @@ export default function CategoryCsvData(props) {
       }
 
     const getData = () => {
-        call("/department/monthly-chart?name=중고등부&year=" + props.year)
+        call("/department/monthly-chart?name=" + props.department.name + "&year=" + props.year)
             .then(res => {
               const title1 = [{name: "수입"}];
               const income = (res.data.map(d => createIncomeData(d)));

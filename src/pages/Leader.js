@@ -302,7 +302,7 @@ export default function Leader(props) {
               </Grid>
               <Grid item xs={12} ref={categoryTab}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%', overflow: 'auto'  }}>
-                  <CategoryTable categories={categories} add={addCategory} delete={deleteCategory} update={updateCategory} year={year} />
+                  <CategoryTable categories={categories} add={addCategory} delete={deleteCategory} update={updateCategory} department={department} year={year} />
                 </Paper>
               </Grid>
               <Grid item xs={12} ref={memberTab}>

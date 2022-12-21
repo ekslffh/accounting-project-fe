@@ -47,7 +47,7 @@ export default function Orders_category(props) {
        <Grid item xs={10}>
         <Title>카테고리</Title>
        </Grid> 
-       <Grid item xs={2} align="right" padding={"0 16px"}><CategoryCsvData year={props.year} /></Grid>
+       <Grid item xs={2} align="right" padding={"0 16px"}><CategoryCsvData year={props.year} department={props.department} /></Grid>
       </Grid>
       <Table size="small">
         <TableHead>
