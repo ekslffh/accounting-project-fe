@@ -60,11 +60,7 @@ export default function People(props) {
         <Grid container spacing={3}>
            <Grid item xs={12}>
                 <Paper
-                sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}
+                    sx={{ p: 2, display: 'flex', flexDirection: 'column', width: '100%',overflow: 'auto' }}
                 >
                     <AllMembersTable department={department} members={members} addMember={addMember} updateMember={updateMember} deleteMember={deleteMember} />
                 </Paper>
