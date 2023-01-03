@@ -70,7 +70,7 @@ export default function UserHistoryTable(props) {
 
   function parseDate(date) {
     const year =  date.substr(2,2);
-    const month = (date.charAt(5) !== '0') ? date.substr(5, 2) : date.substr(6, 1);
+    const month = date.substr(5,2);
     const day = date.substr(8,2);
     return `${year}${month}${day}`;
   }
