@@ -50,7 +50,7 @@ export default function Orders_member(props) {
             <TableCell align='center'>직급</TableCell>
             <TableCell align='right'>
               <BasicModal variant="outlined" name="복구"><DeletedMemberTable /></BasicModal>
-              <Button color='modalButton' size='small' onClick={() => {window.location.href = "/member/" + props.department}}>전체보기</Button>
+              <Button variant='outlined' size='small' onClick={() => {window.location.href = "/member/" + props.department}}>관리</Button>
             </TableCell>
           </TableRow>
         </TableHead>

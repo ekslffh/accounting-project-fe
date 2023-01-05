@@ -43,12 +43,13 @@ export default function Orders_category(props) {
 
   return (
     <React.Fragment>
-      <Grid container>
-       <Grid item xs={10}>
+      {/* <Grid container> */}
+       {/* <Grid item xs={8}> */}
         <Title>카테고리</Title>
-       </Grid> 
-       <Grid item xs={2} align="right" padding={"0 16px"}><CategoryCsvData year={props.year} department={props.department} /></Grid>
-      </Grid>
+       {/* </Grid>  */}
+       {/* <CategoryCsvData year={props.year} department={props.department} /> */}
+       {/* <Grid item xs={4} align="right"></Grid> */}
+      {/* </Grid> */}
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -58,6 +59,7 @@ export default function Orders_category(props) {
             <TableCell align="right">
               <BasicModal variant="outlined" name="추가"><AddCategory add={props.add} /></BasicModal>
               <BasicModal variant="outlined" name="복구"><DeletedCategoryTable /></BasicModal>
+              <CategoryCsvData year={props.year} department={props.department} />
             </TableCell>
           </TableRow>
         </TableHead>
