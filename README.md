@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+<img width="20" alt="hsap icon" src="https://github.com/ekslffh/accounting-project-be/assets/66450927/1e78e3e7-3f90-41ac-8451-674c38438f17"> accounting-project-fe
+=====================
+    HSAP(회계시스템) 프로젝트 프론트엔드 구현
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 소개
+    21년도 회계를 맡게 되었는데 회계 방식이 비효율적이라는 생각이 들어 좀 더 효율적인 방법을 모색하게 되었습니다. 
+    기존에는 엑셀을 통한 단순한 작성으로 끝나기 때문에 카테고리별로 정리하거나 월별로 내용을 뽑아내는 작업 등이 수동적으로 계산해야 했습니다. 이에, 효율적으로 만들고 싶다는 생각이 들었습니다.
+    유튜브를 통해 VBA를 공부하면서 엑셀 자동화 시스템을 만들어서 22년도 회계를 맡은 친구에게 주었습니다. 
+    이 과정에서 프로그래밍을 만들어보면서 흥미를 느끼게 되었고, 좀 더 효율적이고 사용하기 쉬운 결과물을 만들어내고 싶다는 욕심이 생겼습니다.
 
-## Available Scripts
+## 프로젝트 관련 URL
+- [HSAP 프로젝트 관리 (notion)](https://www.notion.so/22b25f8083dc48feb590e3f771826881?v=7734e63a3725468084fd4861ffed3727)
+- [시연영상](https://youtu.be/Cb8aQXQ52ms)
+    
+## 기존 업무프로세스의 문제점
+1. 청구방식
+    - 사용인원에게 카톡이나 직접 영수증을 받아 해당 금액을 확인 후 송금
+    - 그때 그때 확인해서 송금해주지 않으면 헷갈리는 경우가 있다.
+    - 송금이후 한번 더 확인하여 엑셀에 작성해줘야 한다.
+2. 작성방식
+    - 받은 영수증들과 카톡내용들을 가지고 날짜별로 정리하여 엑셀에 작성
+    - 여러 곳에 분포되어 있는 데이터들을 취합하여 정리해야 하기 때문에 시간도 오래 걸리고 잔액이 맞기 전까지는 확신할 수 없다.
+    - 개별 확인하여 날짜별로 정리하고 직접 작성
+3. 제출방식
+    - 분기별 사용내역들을 카테고리별로 정리하고 남은 금액 정확히 맞춰서 반환
+    - 직접 카테고리별로 더해보고 총합이 맞는지 확인해야 한다.
+    - 연말정산에서는 1년 데이터를 정리해야 하므로 많은 시간이 소요된다.
+4. 연도별 데이터 
+    - 직전년도 회계데이터는 인수인계 시 받아서 사용하지만 구체적 연도별 데이터 정리없음.
 
-In the project directory, you can run:
+## HSAP에서 제공하는 기능
+- 청구방식
+    - 각 사용자들은 사이트를 통해 개별적으로 사용내역들을 직접 작성한다.
+    - 회계는 이를 전체 집계한 화면을 통해 청구신청한 인원들에게 돈을 송금해준다.
+- 작성방식
+    - 회계는 본인이 사용한 내역만 작성 
+- 제출방식
+    - 전체 부서원들의 모든 내역들이 하나의 화면에 날짜별로 정리되어 나온다.
+    - 따라서 회계는 엑셀 버튼을 눌러서 해당 데이터 출력 후 제출
+- 연도별 데이터
+    - 자동적으로 매년 쌓이게 된다.
+   
+## 기술스택
+- 버전관리 : Git Hub
+- IDE : VsCode
+- language : JS, html, css
+- Framework : Spring / SpringBoot / SpringSecurity / SpringJpa
+- 배포 : AWS Amplify 
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 순서
+- 관리자는 유저의 정보를 저장해놓고 사용가능 금액 직책별로 설정
+- 사용자는 웹페이지에 접근해 로그인 후 지출내역 작성
+- 사용자는 자신의 현재까지의 지출내역 조회 후 남은 사용금액 확인
+- 관리자는 전체 사용자에 대한 지출정보 필터링해서 조회 후 추가설정 금액 있을 시 추가
